@@ -15,7 +15,7 @@ class SecondActivity : AppCompatActivity() {
         val user = intent.extras?.getString("username")
         val gifts = intent.extras?.getString("gift")
 
-        text.text = user +"передал вам" + gifts
+        text.text = "$user передал вам $gifts"
 
     }
 }
