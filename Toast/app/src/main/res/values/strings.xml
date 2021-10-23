@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Toast</string>
+    <string name="button">Button</string>
+    <string name="cat_food">Время кормить кота</string>
+</resources>
