@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PopupMenu</string>
+    <string name="popup_menu_item_1">Popup menu item 1</string>
+    <string name="popup_menu_item_2">Popup menu item 2</string>
+    <string name="popup_menu_item_3">Popup menu item 3</string>
+    <string name="submenu">Подменю</string>
+    <string name="popup_menu_item_4">Popup menu item 4</string>
+    <string name="popup_menu_item_5">Popup menu item 5</string>
+    <string name="popup_menu_item_6">Popup menu item 6</string>
+    <string name="showmenu">Показать меню</string>
+    <string name="meow">Мяу</string>
+    <string name="red">Red</string>
+    <string name="yellow">Yellow</string>
+    <string name="green">Green</string>
+</resources>
