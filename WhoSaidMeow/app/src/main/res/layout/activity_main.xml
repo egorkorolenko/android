@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/image_cat"
+        android:layout_width="156dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="38dp"
+        app:layout_constraintBottom_toTopOf="@+id/image_dog"
+        app:layout_constraintEnd_toStartOf="@+id/image_chicken"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cat" />
+
+    <ImageView
+        android:id="@+id/image_chicken"
+        android:layout_width="163dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="39dp"
+        app:layout_constraintBottom_toTopOf="@+id/image_cow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/chiken" />
+
+    <ImageView
+        android:id="@+id/image_cow"
+        android:layout_width="162dp"
+        android:layout_height="187dp"
+        android:layout_marginStart="63dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/image_sheep"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_dog"
+        app:srcCompat="@drawable/cow" />
+
+    <ImageView
+        android:id="@+id/image_dog"
+        android:layout_width="154dp"
+        android:layout_height="188dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="38dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_cat"
+        app:srcCompat="@drawable/dog" />
+
+    <ImageView
+        android:id="@+id/image_duck"
+        android:layout_width="156dp"
+        android:layout_height="214dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="62dp"
+        app:layout_constraintEnd_toStartOf="@+id/image_sheep"
+        app:layout_constraintTop_toBottomOf="@+id/image_dog"
+        app:srcCompat="@drawable/duck" />
+
+    <ImageView
+        android:id="@+id/image_sheep"
+        android:layout_width="161dp"
+        android:layout_height="208dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/sheep" />
+</androidx.constraintlayout.widget.ConstraintLayout>
