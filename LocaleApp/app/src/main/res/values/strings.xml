@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">LocaleApp</string>
+    <string name="kitty">Kitty</string>
+    <string name="i">Кiт</string>
+    <string name="hello">Hello World!</string>
+</resources>
