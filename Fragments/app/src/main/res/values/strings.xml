@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Fragments</string>
+    <string name="hello_blank_fragment">Это фрагмент для отображения кота</string>
+    <string name="counter">Счётчик</string>
+    <string name="zero">0</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+</resources>
