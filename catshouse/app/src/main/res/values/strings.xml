@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">catshouse</string>
+    <string name="common_info">Общая информация</string>
+    <string name="name">Имя</string>
+    <string name="city">Город</string>
+    <string name="gender">Пол</string>
+    <string name="age">Возраст</string>
+
+    <string name="action_save">Сохранить</string>
+    <string name="action_delete">Удалить</string>
+
+    <string name="gender_unknown">Неизвестно</string>
+    <string name="gender_male">Кот</string>
+    <string name="gender_female">Кошка</string>
+
+    <string-array name="array_gender_options">
+        <item>@string/gender_female</item>
+        <item>@string/gender_male</item>
+        <item>@string/gender_unknown</item>
+    </string-array>
+
+    <string name="action_insert_dummy_data">Вставить данные</string>
+    <string name="action_delete_all_entries">Удалить всех гостей</string>
+
+</resources>
