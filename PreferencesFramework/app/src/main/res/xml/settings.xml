@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="wifi"
+        android:summary="@string/wifi_summary"
+        android:title="@string/wifi_title"/>
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="hints"
+        android:summary="@string/hints_summary"
+        android:title="@string/hints_title"/>
+
+    <EditTextPreference
+    android:key="test_size"
+    android:title="Размер шрифта"
+    android:summary="Устанавливает новый размер шрифта"
+    android:defaultValue="14"
+    android:dialogTitle="Введите размер шрифта (от 10 до 32)" />
+
+    <ListPreference
+        android:key="test_style"
+        android:title="Стиль для шрифта"
+        android:summary="Устанавливает стиль для шрифта"
+        android:defaultValue="1"
+        android:entries="@array/text_style"
+        android:entryValues="@array/text_style"
+        android:dialogTitle="Выберите стиль для шрифта" />
+
+    <SwitchPreference
+        android:key="glad"
+        android:summaryOff="Вы уверены, что не будете гладить кота?"
+        android:summaryOn="Гладить кота?"
+        android:switchTextOff="Нет"
+        android:switchTextOn="Да" />
+
+    <CheckBoxPreference
+        android:key="cat_key"
+        android:title="У вас есть кот?"
+        android:summary="Доступно для владельцев котов"
+        android:defaultValue="true" />
+    <EditTextPreference
+        android:key="catfood"
+        android:title="Подарки для кота"
+        android:summary="Угости кота"
+        android:dependency="cat_key" />
+
+    <PreferenceCategory android:title="Запуск сайта через Intent" >
+        <PreferenceScreen
+            android:summary="developer.alexanderklimov.ru/android"
+            android:title="Освой Android играючи" >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://developer.alexanderklimov.ru/android/" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <ListPreference
+        android:defaultValue="1"
+        android:dialogTitle="Выберите стиль для шрифта"
+        android:entries="@array/text_style"
+        android:entryValues="@array/text_style"
+        android:key="pref_style"
+        android:summary="Устанавливает стиль для шрифта"
+        android:title="Стиль для шрифта" />
+</PreferenceScreen>

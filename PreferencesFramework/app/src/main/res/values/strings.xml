@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Preferences Framework</string>
+    <string name="wifi_title">Wi-Fi</string>
+    <string name="wifi_summary">Вкл. или выкл. сеть WiFi</string>
+    <string name="hints_title">Подсказки</string>
+    <string name="hints_summary">Показывать подсказки</string>
+    <string name="settings_title">заголовок настроек</string>
+    <string name="ringtone_title">Рингтон</string>
+    <string name="category_title">Настройки по категориям</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">cancel</string>
+
+</resources>
