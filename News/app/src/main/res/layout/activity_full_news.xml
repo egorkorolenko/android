@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".OpenNews">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:id="@+id/toolbar"
+        app:title="News"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:id="@+id/idNewsImage"
+                android:layout_margin="3dp"
+                android:padding="3dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Title"
+                android:id="@+id/idTitle"
+                android:layout_below="@id/idNewsImage">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="decs"
+                android:id="@+id/idDescription"
+                android:layout_below="@id/idTitle">
+            </TextView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:text="content"
+                android:id="@+id/idContent"
+                android:layout_below="@id/idDescription">
+            </TextView>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="full news"
+        android:id="@+id/idbottomReadNews"
+        android:layout_alignParentBottom="true">
+
+    </Button>
+
+</RelativeLayout>

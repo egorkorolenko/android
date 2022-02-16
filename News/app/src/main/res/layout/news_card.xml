@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/id_imageview_news_card"
+            android:scaleType="centerCrop">
+        </ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/id_heading"
+            android:layout_below="@id/id_imageview_news_card"
+            android:text="Заголовок"
+            android:padding="3dp"
+            android:maxLines="2"
+            android:layout_margin="3dp">
+        </TextView>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Подзаголовок"
+            android:layout_below="@id/id_heading"
+            android:id="@+id/id_sub_heading"
+            android:maxLines="3"
+            android:padding="3dp"
+            >
+        </TextView>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
