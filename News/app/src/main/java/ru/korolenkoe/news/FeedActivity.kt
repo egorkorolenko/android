@@ -38,15 +38,12 @@ class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
         toolBar = findViewById(R.id.toolbar)
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
-        categoryAdapter = CategoryAdapter(categorys,this,null)
+        categoryAdapter = CategoryAdapter(categorys,this, this::onClickCategory)
         newsAdapter = NewsAdapter(articlesArrayList,this)
 
         recyclerViewNews.layoutManager = LinearLayoutManager(this)
         recyclerViewNews.adapter = newsAdapter
         recyclerViewCategory.adapter = categoryAdapter
-
-        supportActionBar?.hide()
-        setSupportActionBar(toolBar)
 
         getCategories()
         getNews("All")
@@ -60,19 +57,19 @@ class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getCategories(){
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
-        categorys.add(CategoryModel("All","https://images.unsplash.com/photo-1495020689067-958852a7765e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"))
+        categorys.add(CategoryModel("All"))
+        categorys.add(CategoryModel("business"))
+        categorys.add(CategoryModel("entertainment"))
+        categorys.add(CategoryModel("general"))
+        categorys.add(CategoryModel("health"))
+        categorys.add(CategoryModel("science"))
+        categorys.add(CategoryModel("science"))
+        categorys.add(CategoryModel("sports"))
+        categorys.add(CategoryModel("technology"))
         categoryAdapter.notifyDataSetChanged()
     }
 
     private fun getNews(category:String){
-//        progressBar.visibility = View.VISIBLE
         articlesArrayList.clear()
         val categoryUrl =
             "https://newsapi.org/v2/top-headlines/country=ru&category=$category&apikey=ed7b9a5f85274d88ac578e199f7cf65e"
@@ -86,7 +83,6 @@ class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
 
         val retrofitApi:RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
 
-
         val call:Call<NewsModel> = if(category == "All"){
             retrofitApi.getAllNews(url)
         }else{
@@ -97,8 +93,6 @@ class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
                 val newsModel = response.body()
-                toolBar.visibility = View.GONE
-//                progressBar.visibility = View.GONE
                 val articles: ArrayList<Articles> = newsModel!!.articles
                 for(i in articles){
                     val article = Articles(i.title,i.description,i.urlToImage,i.url,i.content)

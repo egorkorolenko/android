@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">News</string>
+    <string name="news">NEWS</string>
+    <string name="timenow">timeNow</string>
+    <string name="datetoday">dateToday</string>
+    <string name="now">сейчас</string>
+    <string name="newsToolbar">Новости</string>
+</resources>

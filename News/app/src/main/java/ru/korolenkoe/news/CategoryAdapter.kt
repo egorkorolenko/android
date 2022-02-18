@@ -29,7 +29,7 @@ class CategoryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val categoryModel:CategoryModel = articlesArrayList[position]
         holder.category.text = categoryModel.category
-        Picasso.get().load(categoryModel.categoryImageUrl).into(holder.categoryImage)
+//        Picasso.get().load(categoryModel.categoryImageUrl).into(holder.categoryImage)
         holder.itemView.setOnClickListener {
             clickCategory?.onClickCategory(position)
         }
@@ -41,6 +41,6 @@ class CategoryAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        var category: TextView = itemView.findViewById(R.id.text_view_category)
-       var categoryImage: ImageView= itemView.findViewById(R.id.image_view_category)
+//       var categoryImage: ImageView= itemView.findViewById(R.id.image_view_category)
     }
 }

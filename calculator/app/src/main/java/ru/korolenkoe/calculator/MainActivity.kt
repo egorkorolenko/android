@@ -3,6 +3,7 @@ package ru.korolenkoe.calculator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
         val equal: Button = findViewById(R.id.numEq)
         val deleteAll: Button = findViewById(R.id.allclear)
         val deleteLast: Button = findViewById(R.id.del)
-
         val textView: TextView = findViewById(R.id.textView)
         textView.setTextColor(Color.WHITE)
         textView.text = ""
