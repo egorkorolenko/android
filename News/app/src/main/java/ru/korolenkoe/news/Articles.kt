@@ -5,6 +5,7 @@ class Articles(
     var description: String?,
     var urlToImage: String?,
     var url: String?,
-    var content: String?
+    var content: String?,
+    var publishedAt: String?
 )
 

@@ -87,6 +87,7 @@ class FeedActivity :AppCompatActivity(){
             "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val url = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val baseUrl = "https://newsapi.org/"
+        val customCategory = "https://newsapi.org/v2/everything?country=ru&q=bitcoin&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -107,7 +108,7 @@ class FeedActivity :AppCompatActivity(){
                 val newsModel = response.body()
                 val articles: ArrayList<Articles> = newsModel!!.articles
                 for(i in articles){
-                    val article = Articles(i.title,i.description,i.urlToImage,i.url,i.content)
+                    val article = Articles(i.title,i.description,i.urlToImage,i.url,i.content, i.publishedAt)
                     articlesArrayList.add(article)
                 }
                 newsAdapter.notifyDataSetChanged()

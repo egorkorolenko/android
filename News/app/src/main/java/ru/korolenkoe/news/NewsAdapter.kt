@@ -24,8 +24,8 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context:Context)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val articles: Articles = articlesArrayList[position]
-//        holder.subTitle.text = articles.description
         holder.title.text = articles.title
+        holder.time.text = articles.publishedAt?.replace('T',' ')?.replace('Z',' ')
         Picasso.get().load(articles.urlToImage).into(holder.newsImage)
         holder.itemView.setOnClickListener{
             val intent = Intent(context,OpenNews::class.java)
@@ -34,6 +34,7 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context:Context)
             intent.putExtra("desc",articles.description)
             intent.putExtra("image",articles.urlToImage)
             intent.putExtra("url",articles.url)
+            intent.putExtra("publishedAt",articles.publishedAt)
             context.startActivity(intent)
         }
     }
@@ -44,7 +45,7 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context:Context)
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.id_heading)
-//        var subTitle:TextView = itemView.findViewById(R.id.id_sub_heading)
         var newsImage: ImageView = itemView.findViewById(R.id.id_imageview_news_card)
+        var time:TextView = itemView.findViewById(R.id.id_time_published)
     }
 }
