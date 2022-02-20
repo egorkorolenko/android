@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 //ed7b9a5f85274d88ac578e199f7cf65e
 
-class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
+class FeedActivity :AppCompatActivity(){
 
     private var categorys:ArrayList<CategoryModel> = arrayListOf()
     private var articlesArrayList : ArrayList<Articles> = arrayListOf()
@@ -38,7 +38,12 @@ class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
         toolBar = findViewById(R.id.toolbar)
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
-        categoryAdapter = CategoryAdapter(categorys,this, this::onClickCategory)
+        categoryAdapter = CategoryAdapter(categorys,this, object : ClickCategoryInterface {
+            override fun onClickCategory(position: Int) {
+                val category: String = categorys[position].category
+                getNews(category)
+            }
+        })
         newsAdapter = NewsAdapter(articlesArrayList,this)
 
         recyclerViewNews.layoutManager = LinearLayoutManager(this)
@@ -50,29 +55,36 @@ class FeedActivity :AppCompatActivity(), ClickCategoryInterface {
         newsAdapter.notifyDataSetChanged()
     }
 
-    override fun onClickCategory(position: Int) {
-        val category: String = categorys[position].category
-        getNews(category)
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     private fun getCategories(){
-        categorys.add(CategoryModel("All"))
-        categorys.add(CategoryModel("business"))
-        categorys.add(CategoryModel("entertainment"))
-        categorys.add(CategoryModel("general"))
-        categorys.add(CategoryModel("health"))
-        categorys.add(CategoryModel("science"))
-        categorys.add(CategoryModel("science"))
-        categorys.add(CategoryModel("sports"))
-        categorys.add(CategoryModel("technology"))
+        categorys.add(CategoryModel("Всё"))
+        categorys.add(CategoryModel("Главное"))
+        categorys.add(CategoryModel("Бизнес"))
+        categorys.add(CategoryModel("Развлечение"))
+        categorys.add(CategoryModel("Здоровье"))
+        categorys.add(CategoryModel("Наука"))
+        categorys.add(CategoryModel("Спорт"))
+        categorys.add(CategoryModel("Технологии"))
         categoryAdapter.notifyDataSetChanged()
     }
 
     private fun getNews(category:String){
+
+        val categoryEn = when(category){
+            "Главное" -> "general"
+            "Всё" -> "All"
+            "Бизнес" -> "business"
+            "Развлечение" -> "entertainment"
+            "Здоровье" -> "health"
+            "Наука" -> "science"
+            "Спорт" -> "sports"
+            "Технологии" -> "technology"
+            else -> {"All"}
+        }
+
         articlesArrayList.clear()
         val categoryUrl =
-            "https://newsapi.org/v2/top-headlines/country=ru&category=$category&apikey=ed7b9a5f85274d88ac578e199f7cf65e"
+            "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val url = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val baseUrl = "https://newsapi.org/"
 

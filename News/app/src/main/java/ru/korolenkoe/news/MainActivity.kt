@@ -44,9 +44,7 @@ class MainActivity : AppCompatActivity() {
             11 -> monthRus = "Декабря"
         }
 
-//        timeNow.text = "Сейчас: $hour:$minute"
         timeNow.text = "Сейчас:"
-//        dateToday.text = "Сегодня: $day $monthRus, $year"
         dateToday.text = "Сегодня:"
 
         timeNow2.text = "$hour:$minute"
