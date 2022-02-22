@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +30,7 @@ class FeedActivity :AppCompatActivity(){
     private lateinit var recyclerViewCategory: RecyclerView
     private lateinit var recyclerViewNews : RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class FeedActivity :AppCompatActivity(){
         setContentView(R.layout.activity_feed)
 
         progressBar = findViewById(R.id.progressBar)
+        swipeRefreshLayout = findViewById(R.id.id_swipe_refresh)
         toolBar = findViewById(R.id.toolbar)
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
@@ -70,6 +73,7 @@ class FeedActivity :AppCompatActivity(){
         categoryAdapter.notifyDataSetChanged()
     }
 
+
     private fun getNews(category:String){
 
         progressBar.visibility = View.VISIBLE
@@ -100,7 +104,7 @@ class FeedActivity :AppCompatActivity(){
 
         val retrofitApi:RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
 
-        val call:Call<NewsModel> = if(category == "All"){
+        val call:Call<NewsModel> = if(categoryEn == "All"){
             retrofitApi.getAllNews(url)
         }else{
             retrofitApi.getNewsByCategory(categoryUrl)
@@ -124,5 +128,33 @@ class FeedActivity :AppCompatActivity(){
                 toast.show()
             }
         })
+
+        swipeRefreshLayout.setOnRefreshListener{
+            val call:Call<NewsModel> = if(categoryEn == "All"){
+                retrofitApi.getAllNews(url)
+            }else{
+                retrofitApi.getNewsByCategory(categoryUrl)
+            }
+
+            call.enqueue(object : Callback<NewsModel>{
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
+                    progressBar.visibility = View.GONE
+                    val newsModel = response.body()
+                    val articles: ArrayList<Articles> = newsModel!!.articles
+                    for(i in articles){
+                        val article = Articles(i.title,i.description,i.urlToImage,i.url,i.content, i.publishedAt)
+                        articlesArrayList.add(article)
+                    }
+                    newsAdapter.notifyDataSetChanged()
+                }
+
+                override fun onFailure(call: Call<NewsModel>, t: Throwable) {
+                    val toast = Toast.makeText(this@FeedActivity, "Fail get news", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+            })
+            swipeRefreshLayout.isRefreshing = false
+        }
     }
 }
