@@ -56,6 +56,7 @@ class FeedActivity :AppCompatActivity(){
 
         getCategories()
         getNews("All")
+
         newsAdapter.notifyDataSetChanged()
         categoryAdapter.notifyItemChanged(0,categorys.size)
     }
@@ -75,7 +76,6 @@ class FeedActivity :AppCompatActivity(){
 
 
     private fun getNews(category:String){
-
         progressBar.visibility = View.VISIBLE
 
         val categoryEn = when(category){
@@ -97,12 +97,49 @@ class FeedActivity :AppCompatActivity(){
         val baseUrl = "https://newsapi.org/"
         val customCategory = "https://newsapi.org/v2/everything?q=путин&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val retrofitApi:RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
+        val retrofit = Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            val retrofitApi: RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
+
+            val call: Call<NewsModel> = if (categoryEn == "All") {
+                retrofitApi.getAllNews(url)
+            } else {
+                retrofitApi.getNewsByCategory(categoryUrl)
+            }
+
+            call.enqueue(object : Callback<NewsModel> {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
+                    progressBar.visibility = View.GONE
+                    val newsModel = response.body()
+                    val articles: ArrayList<Articles> = newsModel!!.articles
+                    for (i in articles) {
+                        val article = Articles(
+                            i.title,
+                            i.description,
+                            i.urlToImage,
+                            i.url,
+                            i.content,
+                            i.publishedAt
+                        )
+                        articlesArrayList.add(article)
+                    }
+                    newsAdapter.notifyDataSetChanged()
+                }
+
+                override fun onFailure(call: Call<NewsModel>, t: Throwable) {
+                    val toast =
+                        Toast.makeText(this@FeedActivity, "Fail get news", Toast.LENGTH_SHORT)
+                    toast.show()
+                }
+            })
+
+    swipeRefreshLayout.setOnRefreshListener {
+        articlesArrayList.clear()
 
         val call:Call<NewsModel> = if(categoryEn == "All"){
             retrofitApi.getAllNews(url)
@@ -112,32 +149,6 @@ class FeedActivity :AppCompatActivity(){
 
         call.enqueue(object : Callback<NewsModel>{
             @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
-                progressBar.visibility = View.GONE
-                val newsModel = response.body()
-                val articles: ArrayList<Articles> = newsModel!!.articles
-                for(i in articles){
-                    val article = Articles(i.title,i.description,i.urlToImage,i.url,i.content, i.publishedAt)
-                    articlesArrayList.add(article)
-                }
-                newsAdapter.notifyDataSetChanged()
-            }
-
-            override fun onFailure(call: Call<NewsModel>, t: Throwable) {
-                val toast = Toast.makeText(this@FeedActivity, "Fail get news", Toast.LENGTH_SHORT)
-                toast.show()
-            }
-        })
-
-        swipeRefreshLayout.setOnRefreshListener{
-            val call:Call<NewsModel> = if(categoryEn == "All"){
-                retrofitApi.getAllNews(url)
-            }else{
-                retrofitApi.getNewsByCategory(categoryUrl)
-            }
-
-            call.enqueue(object : Callback<NewsModel>{
-                @SuppressLint("NotifyDataSetChanged")
                 override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
                     progressBar.visibility = View.GONE
                     val newsModel = response.body()
@@ -148,7 +159,6 @@ class FeedActivity :AppCompatActivity(){
                     }
                     newsAdapter.notifyDataSetChanged()
                 }
-
                 override fun onFailure(call: Call<NewsModel>, t: Throwable) {
                     val toast = Toast.makeText(this@FeedActivity, "Fail get news", Toast.LENGTH_SHORT)
                     toast.show()
