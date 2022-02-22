@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, FeedActivity::class.java)
             startActivity(intent)
             finish()
-        },3000)
+        }, 3000)
 
     }
 }

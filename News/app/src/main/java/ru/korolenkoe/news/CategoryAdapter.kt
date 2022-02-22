@@ -14,9 +14,9 @@ import org.jetbrains.annotations.NotNull
 
 class CategoryAdapter(
     _categoryList: ArrayList<CategoryModel>,
-    _context:Context,
+    _context: Context,
     _categoryClick: ClickCategoryInterface?
-): RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     private var articlesArrayList: ArrayList<CategoryModel> = _categoryList
     var context: Context = _context
@@ -24,13 +24,14 @@ class CategoryAdapter(
 
     @NotNull
     override fun onCreateViewHolder(@NotNull parent: ViewGroup, viewType: Int): ViewHolder {
-        val view:View = LayoutInflater.from(parent.context).inflate(R.layout.category_card,parent,false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.category_card, parent, false)
         return ViewHolder(view)
     }
 
     @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val categoryModel:CategoryModel = articlesArrayList[position]
+        val categoryModel: CategoryModel = articlesArrayList[position]
         holder.category.text = categoryModel.category
         holder.itemView.setOnClickListener {
             clickCategory?.onClickCategory(position)
@@ -45,6 +46,6 @@ class CategoryAdapter(
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-       var category: TextView = itemView.findViewById(R.id.text_view_category)
+        var category: TextView = itemView.findViewById(R.id.text_view_category)
     }
 }

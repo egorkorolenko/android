@@ -10,12 +10,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Picasso
 
-class OpenNews: AppCompatActivity() {
+class OpenNews : AppCompatActivity() {
 
-    private lateinit var contentTV:TextView
-    private lateinit var descTV:TextView
-    private lateinit var titleTV:TextView
-    private lateinit var imageIV:ImageView
+    private lateinit var contentTV: TextView
+    private lateinit var descTV: TextView
+    private lateinit var titleTV: TextView
+    private lateinit var imageIV: ImageView
     private lateinit var bottom: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
