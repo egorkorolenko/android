@@ -72,6 +72,8 @@ class FeedActivity :AppCompatActivity(){
 
     private fun getNews(category:String){
 
+        progressBar.visibility = View.VISIBLE
+
         val categoryEn = when(category){
             "Главное" -> "general"
             "Всё" -> "All"
@@ -107,6 +109,7 @@ class FeedActivity :AppCompatActivity(){
         call.enqueue(object : Callback<NewsModel>{
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<NewsModel>, response: Response<NewsModel>) {
+                progressBar.visibility = View.GONE
                 val newsModel = response.body()
                 val articles: ArrayList<Articles> = newsModel!!.articles
                 for(i in articles){
