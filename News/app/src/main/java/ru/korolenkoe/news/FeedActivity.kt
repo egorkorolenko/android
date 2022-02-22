@@ -7,6 +7,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -53,6 +54,7 @@ class FeedActivity :AppCompatActivity(){
         getCategories()
         getNews("All")
         newsAdapter.notifyDataSetChanged()
+        categoryAdapter.notifyItemChanged(0,categorys.size)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -87,7 +89,7 @@ class FeedActivity :AppCompatActivity(){
             "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val url = "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val baseUrl = "https://newsapi.org/"
-        val customCategory = "https://newsapi.org/v2/everything?country=ru&q=bitcoin&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+        val customCategory = "https://newsapi.org/v2/everything?q=путин&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)

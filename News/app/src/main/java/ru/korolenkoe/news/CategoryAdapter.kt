@@ -1,11 +1,13 @@
 package ru.korolenkoe.news
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import org.jetbrains.annotations.NotNull
@@ -26,13 +28,16 @@ class CategoryAdapter(
         return ViewHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor", "NotifyDataSetChanged")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val categoryModel:CategoryModel = articlesArrayList[position]
         holder.category.text = categoryModel.category
-//        Picasso.get().load(categoryModel.categoryImageUrl).into(holder.categoryImage)
         holder.itemView.setOnClickListener {
             clickCategory?.onClickCategory(position)
+            holder.itemView.setBackgroundResource(R.color.cardview_dark_background)
+            notifyItemChanged(position)
         }
+        holder.itemView.setBackgroundResource(R.color.white)
     }
 
     override fun getItemCount(): Int {
@@ -41,6 +46,5 @@ class CategoryAdapter(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
        var category: TextView = itemView.findViewById(R.id.text_view_category)
-//       var categoryImage: ImageView= itemView.findViewById(R.id.image_view_category)
     }
 }
