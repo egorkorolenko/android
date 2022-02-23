@@ -22,6 +22,7 @@
             android:id="@+id/id_heading"
             android:layout_below="@id/id_imageview_news_card"
             android:text="Заголовок"
+            android:fontFamily="serif"
             android:padding="3dp"
             android:maxLines="3"
             android:layout_margin="3dp">
@@ -35,6 +36,7 @@
             android:id="@+id/id_time_published"
             android:padding="3dp"
             android:layout_margin="3dp"
+            android:fontFamily="serif"
             >
         </TextView>
 
