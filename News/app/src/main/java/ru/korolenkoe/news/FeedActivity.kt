@@ -1,8 +1,10 @@
 package ru.korolenkoe.news
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +32,7 @@ class FeedActivity : AppCompatActivity() {
     private lateinit var recyclerViewNews: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var searchImage:ImageView
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +44,7 @@ class FeedActivity : AppCompatActivity() {
         toolBar = findViewById(R.id.toolbar)
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
+        searchImage = findViewById(R.id.search_image_view)
         categoryAdapter = CategoryAdapter(categorys, this, object : ClickCategoryInterface {
             override fun onClickCategory(position: Int) {
                 val category: String = categorys[position].category
@@ -58,6 +62,10 @@ class FeedActivity : AppCompatActivity() {
 
         newsAdapter.notifyDataSetChanged()
         categoryAdapter.notifyItemChanged(0, categorys.size)
+        searchImage.setOnClickListener {
+            val intent = Intent(this@FeedActivity,SearchNewsByQ::class.java)
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
