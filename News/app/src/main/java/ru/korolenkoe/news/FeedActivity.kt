@@ -20,7 +20,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 //ed7b9a5f85274d88ac578e199f7cf65e
-
+//7f48007fe08247348150f6d0df56beef
 class FeedActivity : AppCompatActivity() {
 
     private var categorys: ArrayList<CategoryModel> = arrayListOf()
@@ -101,12 +101,12 @@ class FeedActivity : AppCompatActivity() {
 
         articlesArrayList.clear()
         val categoryUrl =
-            "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+            "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=7f48007fe08247348150f6d0df56beef"
         val url =
-            "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+            "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
         val baseUrl = "https://newsapi.org/"
         val customCategory =
-            "https://newsapi.org/v2/everything?q=путин&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+            "https://newsapi.org/v2/everything?q=путин&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
 
 
         val retrofit = Retrofit.Builder()
