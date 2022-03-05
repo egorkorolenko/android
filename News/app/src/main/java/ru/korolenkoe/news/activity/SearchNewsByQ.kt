@@ -1,4 +1,4 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -17,6 +17,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.korolenkoe.news.adapter.NewsAdapter
+import ru.korolenkoe.news.R
+import ru.korolenkoe.news.RetrofitAPI
+import ru.korolenkoe.news.model.Articles
+import ru.korolenkoe.news.model.NewsModel
 
 class SearchNewsByQ : AppCompatActivity() {
 
@@ -67,7 +72,7 @@ class SearchNewsByQ : AppCompatActivity() {
         articlesArrayList.clear()
 
         val responce =
-            "https://newsapi.org/v2/everything?q=$request&from=2022-01-26&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
+            "https://newsapi.org/v2/everything?q=$request&from=2022-02-05&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
         val baseUrl = "https://newsapi.org/"
 
         val retrofit = Retrofit.Builder()

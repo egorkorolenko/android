@@ -1,4 +1,6 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.model
+
+import ru.korolenkoe.news.model.Articles
 
 class NewsModel(
     var totalResults: Int,

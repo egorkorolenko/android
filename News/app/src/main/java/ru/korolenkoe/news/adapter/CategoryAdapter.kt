@@ -1,16 +1,16 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import org.jetbrains.annotations.NotNull
+import ru.korolenkoe.news.ClickCategoryInterface
+import ru.korolenkoe.news.R
+import ru.korolenkoe.news.model.CategoryModel
 
 class CategoryAdapter(
     _categoryList: ArrayList<CategoryModel>,

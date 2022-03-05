@@ -1,4 +1,4 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import ru.korolenkoe.news.R
 import java.util.*
 
 class MainActivity : AppCompatActivity() {

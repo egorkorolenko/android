@@ -1,4 +1,4 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -10,7 +10,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.datetime.*
-import java.time.Instant
+import ru.korolenkoe.news.R
+import ru.korolenkoe.news.activity.OpenNews
+import ru.korolenkoe.news.model.Articles
 
 
 class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
@@ -28,8 +30,6 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val articles: Articles = articlesArrayList[position]
         holder.title.text = articles.title
-//        holder.time.text = articles.publishedAt?.replace('T', ' ')?.replace('Z', ' ')
-//        val time = articles.publishedAt
         val time2 = articles.publishedAt?.toInstant()?.plus(6, DateTimeUnit.HOUR, TimeZone.currentSystemDefault()).toString()
         holder.time.text = time2.replace('T', ' ').replace('Z', ' ')
         Picasso.get().load(articles.urlToImage).into(holder.newsImage)

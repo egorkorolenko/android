@@ -1,4 +1,4 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.model
 
 class Articles(
     var title: String?,

@@ -1,4 +1,4 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -17,6 +17,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.korolenkoe.news.*
+import ru.korolenkoe.news.adapter.CategoryAdapter
+import ru.korolenkoe.news.adapter.NewsAdapter
+import ru.korolenkoe.news.model.Articles
+import ru.korolenkoe.news.model.CategoryModel
+import ru.korolenkoe.news.model.NewsModel
 
 
 //ed7b9a5f85274d88ac578e199f7cf65e
@@ -63,7 +69,7 @@ class FeedActivity : AppCompatActivity() {
         newsAdapter.notifyDataSetChanged()
         categoryAdapter.notifyItemChanged(0, categorys.size)
         searchImage.setOnClickListener {
-            val intent = Intent(this@FeedActivity,SearchNewsByQ::class.java)
+            val intent = Intent(this@FeedActivity, SearchNewsByQ::class.java)
             startActivity(intent)
         }
     }
