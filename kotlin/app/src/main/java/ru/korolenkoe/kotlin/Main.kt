@@ -1,15 +1,19 @@
 package ru.korolenkoe.kotlin
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import java.math.BigInteger
+
+@RequiresApi(Build.VERSION_CODES.S)
 fun main() {
-    print(solution(200))
-    print("\n")
-    print(wave("This is a few words"))
-    print("\n")
-    print(wave("nigga"))
-    print("\n")
-    print(wave("a       b    "))
-    print("\n")
-    print(maxMultiple(2, 7))
+    println(solution(200))
+    println(wave("This is a few words"))
+    println(wave("nigga"))
+    println(wave("a       b    "))
+    println(maxMultiple(2, 7))
+    println(people(arrayOf(3 to 0,9 to 1,4 to 10,12 to 2,6 to 1,7 to 10)))
+    println(duplicateCount("abcde"))
+    println(lastDigit(BigInteger("4"), BigInteger("1")))
 }
 
 fun solution(num: Int): Int {
@@ -50,11 +54,18 @@ fun maxMultiple(d: Int, b: Int): Int {
     return max
 }
 
-fun encode(num: Int): String {
-    if (num == 0) {
-        return ""
-    }else{
-        
+fun people(busStops: Array<Pair<Int, Int>>) : Int {
+    var count = 0;
+    for(a in busStops){
+     count+=a.first
+     count-=a.second
     }
-    return ""
+    return count
+}
+
+fun duplicateCount(text: String) = text.groupBy(Char::toLowerCase).count { it.value.count() > 1 }
+
+@RequiresApi(Build.VERSION_CODES.S)
+fun lastDigit(base: BigInteger, exponent: BigInteger): Int {
+    return base.modPow(exponent, BigInteger("10")).intValueExact()
 }
