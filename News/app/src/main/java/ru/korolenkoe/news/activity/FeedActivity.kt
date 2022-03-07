@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -40,6 +42,8 @@ class FeedActivity : AppCompatActivity() {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var searchImage:ImageView
+    private lateinit var openMenu:ImageView
+    private lateinit var driverLayout: DrawerLayout
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +51,8 @@ class FeedActivity : AppCompatActivity() {
         setContentView(R.layout.activity_feed)
 
         progressBar = findViewById(R.id.progressBar)
+        driverLayout = findViewById(R.id.driverLayout)
+        openMenu = findViewById(R.id.image_open_menu)
         swipeRefreshLayout = findViewById(R.id.id_swipe_refresh)
         toolBar = findViewById(R.id.toolbar)
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
@@ -72,6 +78,9 @@ class FeedActivity : AppCompatActivity() {
         searchImage.setOnClickListener {
             val intent = Intent(this@FeedActivity, SearchNewsByQ::class.java)
             startActivity(intent)
+        }
+        openMenu.setOnClickListener {
+            driverLayout.openDrawer(GravityCompat.START)
         }
     }
 
@@ -137,7 +146,8 @@ class FeedActivity : AppCompatActivity() {
 
         if(categoryEn == null){
             categoryUrl = if(category != "+ своя"){
-                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
+                "https://newsapi.org/v2/everything?q=$category&from=2022-02-15&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
+//                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
             }else {
                 "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
             }

@@ -72,7 +72,7 @@ class SearchNewsByQ : AppCompatActivity() {
         articlesArrayList.clear()
 
         val responce =
-            "https://newsapi.org/v2/everything?q=$request&from=2022-02-05&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
+            "https://newsapi.org/v2/everything?q=$request&from=2022-03-05&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
         val baseUrl = "https://newsapi.org/"
 
         val retrofit = Retrofit.Builder()
