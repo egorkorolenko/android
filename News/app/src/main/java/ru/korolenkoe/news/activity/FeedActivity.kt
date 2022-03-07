@@ -2,11 +2,12 @@ package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.app.AlertDialog;
+import android.content.DialogInterface
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -84,12 +85,39 @@ class FeedActivity : AppCompatActivity() {
         categorys.add(CategoryModel("Наука"))
         categorys.add(CategoryModel("Спорт"))
         categorys.add(CategoryModel("Технологии"))
+        categorys.add(CategoryModel("+ своя"))
         categoryAdapter.notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    private fun addCategory() {
+        val li:LayoutInflater = LayoutInflater.from(this)
+        val promt : View = li.inflate(R.layout.promt_add_category,null)
+        val input : EditText = promt.findViewById(R.id.input_category)
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setView(promt)
+        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
+            categorys.removeAt(categorys.size-1)
+            categorys.add(CategoryModel(input.text.toString()))
+            categorys.add(CategoryModel("+ своя"))
+            categoryAdapter.notifyDataSetChanged()
+        }
+        alertDialogBuilder.setNegativeButton("Cancel") { _, _ ->
+        }
+        val alertDialogCreated:AlertDialog = alertDialogBuilder.create();
+        alertDialogCreated.show()
+        articlesArrayList.clear()
+    }
 
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
+
+        var url="https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
+        val categoryUrl: String
+
+        if(category == "+ своя"){
+            addCategory()
+        }
 
         val categoryEn = when (category) {
             "Главное" -> "general"
@@ -101,19 +129,26 @@ class FeedActivity : AppCompatActivity() {
             "Спорт" -> "sports"
             "Технологии" -> "technology"
             else -> {
-                "All"
+                null
             }
         }
 
         articlesArrayList.clear()
-        val categoryUrl =
-            "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=7f48007fe08247348150f6d0df56beef"
-        val url =
-            "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
-        val baseUrl = "https://newsapi.org/"
-        val customCategory =
-            "https://newsapi.org/v2/everything?q=путин&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
 
+        if(categoryEn == null){
+            categoryUrl = if(category != "+ своя"){
+                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
+            }else {
+                "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
+            }
+        }else{
+            categoryUrl =
+                "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=7f48007fe08247348150f6d0df56beef"
+            url =
+                "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
+        }
+
+        val baseUrl = "https://newsapi.org/"
 
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
@@ -122,7 +157,7 @@ class FeedActivity : AppCompatActivity() {
 
         val retrofitApi: RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
 
-        val call: Call<NewsModel> = if (categoryEn == "All") {
+        val call: Call<NewsModel> = if (category == "All") {
             retrofitApi.getAllNews(url)
         } else {
             retrofitApi.getNewsByCategory(categoryUrl)
