@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +30,7 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val animation : Animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.left_animation)
         val articles: Articles = articlesArrayList[position]
         holder.title.text = articles.title
         val time2 = articles.publishedAt?.toInstant()?.plus(6, DateTimeUnit.HOUR, TimeZone.currentSystemDefault()).toString()
@@ -43,6 +46,7 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
             intent.putExtra("publishedAt", articles.publishedAt)
             context.startActivity(intent)
         }
+        holder.itemView.startAnimation(animation)
     }
 
     override fun getItemCount(): Int {
