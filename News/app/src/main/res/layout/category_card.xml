@@ -13,8 +13,10 @@
             android:gravity="center"
             android:layout_centerInParent="true"
             android:text="Category"
+            android:textColor="@color/white"
             android:id="@+id/text_view_category"
             android:fontFamily="serif"
+            android:background="@color/cardview_dark_background"
             >
         </TextView>
 </androidx.cardview.widget.CardView>

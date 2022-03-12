@@ -103,15 +103,17 @@ class FeedActivity : AppCompatActivity() {
         val li:LayoutInflater = LayoutInflater.from(this)
         val promt : View = li.inflate(R.layout.promt_add_category,null)
         val input : EditText = promt.findViewById(R.id.input_category)
-        val alertDialogBuilder = AlertDialog.Builder(this)
+        val alertDialogBuilder = AlertDialog.Builder(this, R.style.MyDialogTheme)
         alertDialogBuilder.setView(promt)
-        alertDialogBuilder.setPositiveButton("OK") { _, _ ->
-            categorys.removeAt(categorys.size-1)
-            categorys.add(CategoryModel(input.text.toString()))
-            categorys.add(CategoryModel("+ своя"))
-            categoryAdapter.notifyDataSetChanged()
-        }
-        alertDialogBuilder.setNegativeButton("Cancel") { _, _ ->
+        alertDialogBuilder.setPositiveButton("Готово") { _, _ ->
+            if(input.text.toString()!=""){
+                categorys.removeAt(categorys.size-1)
+                categorys.add(CategoryModel(input.text.toString()))
+                categorys.add(CategoryModel("+ своя"))
+                categoryAdapter.notifyDataSetChanged()
+            }
+           }
+        alertDialogBuilder.setNegativeButton("Отмена") { _, _ ->
         }
         val alertDialogCreated:AlertDialog = alertDialogBuilder.create();
         alertDialogCreated.show()

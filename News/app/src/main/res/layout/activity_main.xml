@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray2"
+    android:background="@color/blackMain"
     tools:context=".activity.MainActivity">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginTop="40dp"
         android:fontFamily="serif"
         android:text="@string/timenow"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/news" />
 
@@ -28,7 +28,7 @@
         android:layout_marginBottom="22dp"
         android:fontFamily="serif"
         android:text="@string/timenow"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/date_correct"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/news"
@@ -42,7 +42,7 @@
         android:layout_marginBottom="356dp"
         android:fontFamily="serif"
         android:text="@string/datetoday"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -54,7 +54,7 @@
         android:layout_marginBottom="356dp"
         android:text="@string/timenow"
         android:fontFamily="serif"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -67,7 +67,7 @@
         android:layout_marginEnd="123dp"
         android:fontFamily="serif"
         android:text="@string/news"
-        android:textColor="@color/black"
+        android:textColor="@color/specialColor"
         android:textSize="60sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

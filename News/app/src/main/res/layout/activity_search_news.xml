@@ -5,35 +5,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SearchNewsByQ">
+    tools:context=".activity.SearchNewsByQ"
+    android:background="@color/blackMain">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.widget.SearchView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/searchViewId"
-            android:queryHint="Search Here">
-        </android.widget.SearchView>
+            android:layout_height="match_parent">
 
-<!--        <EditText-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:id="@+id/editTextId"-->
-<!--            android:hint="Что ищем?"-->
-<!--            android:imeOptions="actionGo"-->
-<!--            android:inputType="text">-->
+            <android.widget.SearchView
+                android:id="@+id/searchViewId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:background="@color/cardview_dark_background"
+                android:queryHint="Search Here"
+                android:iconifiedByDefault="true">
 
-<!--        </EditText>-->
+            </android.widget.SearchView>
 
-    </RelativeLayout>
+            <!--        <EditText-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:id="@+id/editTextId"-->
+            <!--            android:hint="Что ищем?"-->
+            <!--            android:imeOptions="actionGo"-->
+            <!--            android:inputType="text">-->
+
+            <!--        </EditText>-->
+
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -31,7 +31,6 @@ class SearchNewsByQ : AppCompatActivity() {
     private lateinit var recyclerViewNews: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var newsAdapter: NewsAdapter
-    private lateinit var editText: EditText
     private lateinit var searchView: SearchView
     private lateinit var q: String
 
