@@ -2,32 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 <item
     android:id="@+id/item1"
-    android:title="item1">
+    android:title="Профиль">
 </item>
     <item
         android:id="@+id/item2"
-        android:title="item2">
+        android:title="Закладки">
     </item>
     <item
         android:id="@+id/item3"
-        android:title="item3">
+        android:title="Загруженные">
     </item>
     <item
         android:id="@+id/item4"
-        android:title="item4">
-    </item>
-    <item
-        android:title="other">
-        <menu>
-            <item
-                android:id="@+id/item6"
-                android:title="item6">
-            </item>
-
-            <item
-                android:id="@+id/item7"
-                android:title="item7">
-            </item>
-        </menu>
+        android:title="Настройки">
     </item>
 </menu>

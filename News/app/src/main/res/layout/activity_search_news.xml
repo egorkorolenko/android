@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:background="@color/cardview_dark_background"
-                android:queryHint="Search Here"
+                android:queryHint="Поиск"
                 android:iconifiedByDefault="true">
 
             </android.widget.SearchView>

@@ -120,6 +120,7 @@
             app:menu="@menu/navigation_menu"
             android:background="@color/blackMain"
             app:itemTextColor="@color/white"
+            app:headerLayout="@layout/header_navigation"
             >
         </com.google.android.material.navigation.NavigationView>
        </androidx.drawerlayout.widget.DrawerLayout>
