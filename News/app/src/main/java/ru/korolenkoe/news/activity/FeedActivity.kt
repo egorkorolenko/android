@@ -71,7 +71,7 @@ class FeedActivity : AppCompatActivity() {
         recyclerViewCategory.adapter = categoryAdapter
 
         getCategories()
-        getNews("All")
+        getNews("Всё")
 
         newsAdapter.notifyDataSetChanged()
         categoryAdapter.notifyItemChanged(0, categorys.size)
@@ -123,7 +123,7 @@ class FeedActivity : AppCompatActivity() {
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
 
-        var url="https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
+        var url="https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val categoryUrl: String
 
         if(category == "+ своя"){
@@ -148,16 +148,16 @@ class FeedActivity : AppCompatActivity() {
 
         if(categoryEn == null){
             categoryUrl = if(category != "+ своя"){
-                "https://newsapi.org/v2/everything?q=$category&from=2022-02-15&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
+                "https://newsapi.org/v2/everything?q=$category&from=2022-03-15&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 //                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
             }else {
-                "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
+                "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
             }
         }else{
             categoryUrl =
-                "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=7f48007fe08247348150f6d0df56beef"
+                "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
             url =
-                "https://newsapi.org/v2/top-headlines?country=ru&apiKey=7f48007fe08247348150f6d0df56beef"
+                "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         }
 
         val baseUrl = "https://newsapi.org/"
@@ -169,7 +169,7 @@ class FeedActivity : AppCompatActivity() {
 
         val retrofitApi: RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
 
-        val call: Call<NewsModel> = if (category == "All") {
+        val call: Call<NewsModel> = if (categoryEn == "All") {
             retrofitApi.getAllNews(url)
         } else {
             retrofitApi.getNewsByCategory(categoryUrl)
