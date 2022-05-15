@@ -19,6 +19,7 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.activity.OpenNews
+import ru.korolenkoe.news.menuAction.SendNews
 import ru.korolenkoe.news.model.Articles
 
 
@@ -53,21 +54,18 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
         }
         holder.itemView.startAnimation(animation)
         holder.popupMenu.setOnClickListener {
-            showPopupMenu(it)
+            showPopupMenu(it, articles.url!!)
         }
     }
 
-    private fun showPopupMenu(v: View) {
+    private fun showPopupMenu(v: View, url:String) {
         val popupMenu = PopupMenu(context, v)
         popupMenu.inflate(R.menu.card_menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.send_news -> {
-                    Toast.makeText(
-                        context,
-                        "Вы выбрали PopupMenu 1",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val sender = SendNews()
+                    sender.sendNews(url)
                     true
                 }
                 R.id.addBookmarks -> {

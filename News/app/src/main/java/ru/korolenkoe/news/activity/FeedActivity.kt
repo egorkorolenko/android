@@ -1,13 +1,15 @@
 package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Intent
-import android.app.AlertDialog;
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -20,7 +22,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.korolenkoe.news.*
+import ru.korolenkoe.news.ClickCategoryInterface
+import ru.korolenkoe.news.R
+import ru.korolenkoe.news.RetrofitAPI
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
 import ru.korolenkoe.news.model.Articles
@@ -148,7 +152,7 @@ class FeedActivity : AppCompatActivity() {
 
         if(categoryEn == null){
             categoryUrl = if(category != "+ своя"){
-                "https://newsapi.org/v2/everything?q=$category&from=2022-03-15&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+                "https://newsapi.org/v2/everything?q=$category&from=2022-05-14&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 //                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
             }else {
                 "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
