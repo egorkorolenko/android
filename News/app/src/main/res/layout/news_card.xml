@@ -14,8 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/id_imageview_news_card"
-            android:scaleType="centerCrop">
-        </ImageView>
+            android:scaleType="centerCrop"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -27,9 +26,8 @@
             android:padding="3dp"
             android:textColor="@color/white"
             android:maxLines="3"
-            android:layout_margin="3dp">
-        </TextView>
-        
+            android:layout_margin="3dp"></TextView>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,9 +37,8 @@
             android:padding="3dp"
             android:textColor="@color/white"
             android:layout_margin="3dp"
-            android:fontFamily="serif"
-            >
-        </TextView>
+            android:fontFamily="serif"></TextView>
+
 
     </RelativeLayout>
 
