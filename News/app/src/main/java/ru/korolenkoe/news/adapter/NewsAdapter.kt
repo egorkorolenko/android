@@ -8,10 +8,15 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.datetime.*
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.plus
+import kotlinx.datetime.toInstant
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.activity.OpenNews
 import ru.korolenkoe.news.model.Articles
@@ -47,6 +52,44 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
             context.startActivity(intent)
         }
         holder.itemView.startAnimation(animation)
+        holder.popupMenu.setOnClickListener {
+            showPopupMenu(it)
+        }
+    }
+
+    private fun showPopupMenu(v: View) {
+        val popupMenu = PopupMenu(context, v)
+        popupMenu.inflate(R.menu.card_menu)
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.send_news -> {
+                    Toast.makeText(
+                        context,
+                        "Вы выбрали PopupMenu 1",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                R.id.addBookmarks -> {
+                    Toast.makeText(
+                        context,
+                        "Вы выбрали PopupMenu 2",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                R.id.download -> {
+                    Toast.makeText(
+                        context,
+                        "Вы выбрали PopupMenu 3",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
     }
 
     override fun getItemCount(): Int {
@@ -56,6 +99,8 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var title: TextView = itemView.findViewById(R.id.id_heading)
         var newsImage: ImageView = itemView.findViewById(R.id.id_imageview_news_card)
+        var popupMenu: ImageView = itemView.findViewById(R.id.ib_popup_menu)
         var time: TextView = itemView.findViewById(R.id.id_time_published)
     }
+
 }

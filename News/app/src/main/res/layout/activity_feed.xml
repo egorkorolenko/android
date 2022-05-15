@@ -34,19 +34,21 @@
                         android:text="@string/newsToolbar"
                         android:fontFamily="serif"
                         android:textColor="@color/specialColor"
-                        android:textSize="100px" />
+                        android:textSize="40sp" />
 
                     <ImageView
                         android:id="@+id/search_image_view"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginEnd="30dp"
                         android:layout_marginTop="10dp"
                         android:foregroundGravity="right"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/ic_action_name"
                         android:tint="@color/white"
-                        tools:ignore="UseAppTint"></ImageView>
+                        tools:ignore="UseAppTint">
+
+                    </ImageView>
 
                     <ImageView
                         android:id="@+id/image_open_menu"
@@ -54,7 +56,9 @@
                         android:layout_height="40dp"
                         android:layout_marginTop="9dp"
                         android:src="@drawable/ic_baseline_menu_24"
-                        app:tint="@color/white"></ImageView>
+                        app:tint="@color/white">
+
+                    </ImageView>
                 </RelativeLayout>
 
             </androidx.appcompat.widget.Toolbar>
@@ -115,5 +119,7 @@
         app:menu="@menu/navigation_menu"
         android:background="@color/blackMain"
         app:itemTextColor="@color/white"
-        app:headerLayout="@layout/header_navigation"></com.google.android.material.navigation.NavigationView>
+        app:headerLayout="@layout/header_navigation">
+
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

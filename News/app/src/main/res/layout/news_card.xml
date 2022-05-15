@@ -1,20 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="10dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient">
+        android:background="@drawable/gradient"
+        >
+        <ImageButton
+            android:id="@+id/ib_popup_menu"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:menu = "@menu/card_menu"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@id/id_time_published"
+            android:background="@null"
+            android:tint="@color/white"
+            android:src="@drawable/ic_three_dots"
+            tools:ignore="UseAppTint" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:id="@+id/id_imageview_news_card"
-            android:scaleType="centerCrop"></ImageView>
+            android:scaleType="centerCrop" />
 
         <TextView
             android:layout_width="match_parent"
@@ -26,7 +39,9 @@
             android:padding="3dp"
             android:textColor="@color/white"
             android:maxLines="3"
-            android:layout_margin="3dp"></TextView>
+            android:layout_margin="3dp">
+
+        </TextView>
 
         <TextView
             android:layout_width="match_parent"
@@ -37,7 +52,9 @@
             android:padding="3dp"
             android:textColor="@color/white"
             android:layout_margin="3dp"
-            android:fontFamily="serif"></TextView>
+            android:fontFamily="serif"
+            >
+        </TextView>
 
 
     </RelativeLayout>
