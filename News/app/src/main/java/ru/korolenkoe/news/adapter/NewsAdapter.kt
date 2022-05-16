@@ -53,19 +53,20 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
             context.startActivity(intent)
         }
         holder.itemView.startAnimation(animation)
+
         holder.popupMenu.setOnClickListener {
-            showPopupMenu(it, articles.url!!)
+            showPopupMenu(it, articles.url!!, context)
         }
     }
 
-    private fun showPopupMenu(v: View, url:String) {
+    private fun showPopupMenu(v: View, url:String, context: Context) {
         val popupMenu = PopupMenu(context, v)
         popupMenu.inflate(R.menu.card_menu)
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.send_news -> {
                     val sender = SendNews()
-                    sender.sendNews(url)
+                    sender.sendNews(url, context)
                     true
                 }
                 R.id.addBookmarks -> {
