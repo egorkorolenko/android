@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    tools:ignore="InvalidNavigation">
+
+    <fragment
+        android:id="@+id/profileMenu"
+        android:name="ru.korolenkoe.news.fragments.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/bookmarks"
+        android:name="ru.korolenkoe.news.fragments.BookmarksFragment"
+        android:label="bookmarks_fragment"
+        tools:layout="@layout/bookmarks_fragment" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="ru.korolenkoe.news.fragments.SettingsFragment"
+        android:label="settings_fragment"
+        tools:layout="@layout/settings_fragment" />
+    <fragment
+        android:id="@+id/download"
+        android:name="ru.korolenkoe.news.fragments.DownloadFragment"
+        android:label="download_fragment"
+        tools:layout="@layout/download_fragment" />
+</navigation>

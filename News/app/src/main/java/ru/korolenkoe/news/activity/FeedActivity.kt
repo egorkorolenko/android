@@ -1,22 +1,26 @@
 package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +31,7 @@ import ru.korolenkoe.news.R
 import ru.korolenkoe.news.RetrofitAPI
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
+import ru.korolenkoe.news.fragments.ProfileFragment
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.NewsModel
@@ -34,7 +39,7 @@ import ru.korolenkoe.news.model.NewsModel
 
 //ed7b9a5f85274d88ac578e199f7cf65e
 //7f48007fe08247348150f6d0df56beef
-class FeedActivity : AppCompatActivity() {
+class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var categorys: ArrayList<CategoryModel> = arrayListOf()
     private var articlesArrayList: ArrayList<Articles> = arrayListOf()
@@ -49,6 +54,10 @@ class FeedActivity : AppCompatActivity() {
     private lateinit var openMenu:ImageView
     private lateinit var driverLayout: DrawerLayout
 
+    private lateinit var navigationView: NavigationView
+    private lateinit var navController: NavController
+    private lateinit var navHostFragment: NavHostFragment
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +71,13 @@ class FeedActivity : AppCompatActivity() {
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
         searchImage = findViewById(R.id.search_image_view)
+
+        navigationView = findViewById(R.id.navigationView)
+        navigationView.setNavigationItemSelectedListener(this)
+
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController =  navHostFragment.navController
+
         categoryAdapter = CategoryAdapter(categorys, this, object : ClickCategoryInterface {
             override fun onClickCategory(position: Int) {
                 val category: String = categorys[position].category
@@ -86,6 +102,7 @@ class FeedActivity : AppCompatActivity() {
         openMenu.setOnClickListener {
             driverLayout.openDrawer(GravityCompat.START)
         }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -242,6 +259,31 @@ class FeedActivity : AppCompatActivity() {
                 }
             })
             swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.profileMenu -> {
+                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.download -> {
+                Toast.makeText(this, "скачанные clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.settings -> {
+                Toast.makeText(this, "Настройки clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.bookmarks -> {
+                Toast.makeText(this, "Закладки clicked", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> {
+                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
+                false
+            }
         }
     }
 }
