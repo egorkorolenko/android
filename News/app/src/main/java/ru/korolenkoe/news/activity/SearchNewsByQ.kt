@@ -3,7 +3,6 @@ package ru.korolenkoe.news.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.Toast
@@ -17,9 +16,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.korolenkoe.news.adapter.NewsAdapter
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.RetrofitAPI
+import ru.korolenkoe.news.adapter.NewsAdapter
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.NewsModel
 

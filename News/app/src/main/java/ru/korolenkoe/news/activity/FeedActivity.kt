@@ -1,22 +1,22 @@
 package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
-import android.app.ActionBar
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -31,7 +31,10 @@ import ru.korolenkoe.news.R
 import ru.korolenkoe.news.RetrofitAPI
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
+import ru.korolenkoe.news.fragments.BookmarksFragment
+import ru.korolenkoe.news.fragments.DownloadFragment
 import ru.korolenkoe.news.fragments.ProfileFragment
+import ru.korolenkoe.news.fragments.SettingsFragment
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.NewsModel
@@ -265,19 +268,35 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.profileMenu -> {
-                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
+                val fragment = ProfileFragment()
+//                val intent = Intent(this,ProfileFragment::class.java)
+//                startActivity(intent)
+                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                item.isChecked = true
+                driverLayout.closeDrawer(GravityCompat.START)
                 true
             }
             R.id.download -> {
-                Toast.makeText(this, "скачанные clicked", Toast.LENGTH_SHORT).show()
+                val fragment = DownloadFragment()
+//                val intent = Intent(this,BookmarksFragment::class.java)
+//                startActivity(intent)
+                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                item.isChecked = true
+                driverLayout.closeDrawer(GravityCompat.START)
                 true
             }
             R.id.settings -> {
-                Toast.makeText(this, "Настройки clicked", Toast.LENGTH_SHORT).show()
+                val fragment = SettingsFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                item.isChecked = true
+                driverLayout.closeDrawer(GravityCompat.START)
                 true
             }
             R.id.bookmarks -> {
-                Toast.makeText(this, "Закладки clicked", Toast.LENGTH_SHORT).show()
+                val fragment = BookmarksFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                item.isChecked = true
+                driverLayout.closeDrawer(GravityCompat.START)
                 true
             }
             else -> {
