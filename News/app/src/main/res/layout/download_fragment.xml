@@ -3,11 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".fragments.DownloadFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
-
+        android:text="Settings"
+        android:textSize="125dp"
+        android:textColor="@color/white"/>
+    </RelativeLayout>
 </FrameLayout>

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,7 @@ import ru.korolenkoe.news.fragments.SettingsFragment
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.NewsModel
+import kotlin.system.exitProcess
 
 
 //ed7b9a5f85274d88ac578e199f7cf65e
@@ -266,43 +268,48 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
+        val fragment: Fragment?
+        when (item.itemId) {
             R.id.profileMenu -> {
-                val fragment = ProfileFragment()
-//                val intent = Intent(this,ProfileFragment::class.java)
-//                startActivity(intent)
+                fragment = ProfileFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
-                item.isChecked = true
-                driverLayout.closeDrawer(GravityCompat.START)
-                true
             }
             R.id.download -> {
-                val fragment = DownloadFragment()
-//                val intent = Intent(this,BookmarksFragment::class.java)
-//                startActivity(intent)
+                fragment = DownloadFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
-                item.isChecked = true
-                driverLayout.closeDrawer(GravityCompat.START)
-                true
             }
             R.id.settings -> {
-                val fragment = SettingsFragment()
+                fragment = SettingsFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
-                item.isChecked = true
-                driverLayout.closeDrawer(GravityCompat.START)
-                true
             }
             R.id.bookmarks -> {
-                val fragment = BookmarksFragment()
+                fragment = BookmarksFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
-                item.isChecked = true
-                driverLayout.closeDrawer(GravityCompat.START)
-                true
-            }
-            else -> {
-                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
-                false
             }
         }
+        driverLayout.closeDrawer(GravityCompat.START)
+        onStop()
+        return true
+        }
+
+    override fun onBackPressed() {
+        if(supportFragmentManager.isStateSaved){
+            val intent = Intent(this,FeedActivity::class.java)
+            startActivity(intent)
+        }else{
+//            supportFragmentManager.popBackStack()
+//            supportFragmentManager.beginTransaction().remove(ProfileFragment()).commit()
+//            supportFragmentManager.beginTransaction().remove(BookmarksFragment()).commit()
+//            supportFragmentManager.beginTransaction().remove(SettingsFragment()).commit()
+//            supportFragmentManager.beginTransaction().remove(DownloadFragment()).commit()
+            onStop()
+            exitProcess(0)
+        }
+//        val drawer = findViewById<View>(R.id.driverLayout) as DrawerLayout
+//        if (drawer.isDrawerOpen(GravityCompat.START)) {
+//            drawer.closeDrawer(GravityCompat.START)
+//        } else {
+//            super.onBackPressed()
+//        }
     }
 }

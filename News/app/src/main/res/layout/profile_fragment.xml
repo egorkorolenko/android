@@ -10,50 +10,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarProfile"
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/black">
+            android:layout_height="match_parent"
+            android:text="Profile"
+            android:textColor="@color/white"
+            android:textSize="130dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        </TextView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/toolbar_title"
-                    android:gravity="center"
-                    android:text="Профиль"
-                    android:fontFamily="serif"
-                    android:textColor="@color/specialColor"
-                    android:textSize="40sp" />
-
-                <ImageView
-                    android:id="@+id/image_open_menu"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="9dp"
-                    android:src="@drawable/ic_baseline_menu_24"
-                    app:tint="@color/white">
-                </ImageView>
-            </RelativeLayout>
-
-        </androidx.appcompat.widget.Toolbar>
     </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/navigation_menu"
-        android:background="@color/blackMain"
-        app:itemTextColor="@color/white"
-        app:headerLayout="@layout/header_navigation">
-
-    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>
