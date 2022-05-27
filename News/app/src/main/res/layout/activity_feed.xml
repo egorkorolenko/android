@@ -134,5 +134,13 @@
         app:itemTextColor="@color/white"
         app:headerLayout="@layout/header_navigation">
 
+        <Button
+            android:id="@+id/sing_in_nav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="Войти">
+
+        </Button>
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

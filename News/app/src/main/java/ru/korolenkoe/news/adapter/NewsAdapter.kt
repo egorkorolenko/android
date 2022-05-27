@@ -41,7 +41,11 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
         holder.title.text = articles.title
         val time2 = articles.publishedAt?.toInstant()?.plus(6, DateTimeUnit.HOUR, TimeZone.currentSystemDefault()).toString()
         holder.time.text = time2.replace('T', ' ').replace('Z', ' ')
+        if(articles.urlToImage != ""){
         Picasso.get().load(articles.urlToImage).into(holder.newsImage)
+        }else{
+            Picasso.get().load("res/drawable-anydpi/group.png").into(holder.newsImage)
+        }
         holder.itemView.setOnClickListener {
             val intent = Intent(context, OpenNews::class.java)
             intent.putExtra("title", articles.title)

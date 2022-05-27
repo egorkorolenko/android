@@ -7,10 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -63,6 +60,8 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
 
+    private lateinit var signInButton:Button
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,12 +75,14 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
         searchImage = findViewById(R.id.search_image_view)
+        signInButton = findViewById(R.id.sing_in_nav)
 
         navigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController =  navHostFragment.navController
+//        navigationView.setupWithNavController(navController)
 
         categoryAdapter = CategoryAdapter(categorys, this, object : ClickCategoryInterface {
             override fun onClickCategory(position: Int) {
@@ -108,6 +109,10 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             driverLayout.openDrawer(GravityCompat.START)
         }
 
+        signInButton.setOnClickListener {
+                val intent = Intent(this@FeedActivity, LoginActivity::class.java)
+                startActivity(intent)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -287,6 +292,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
             }
         }
+
         driverLayout.closeDrawer(GravityCompat.START)
         onStop()
         return true
