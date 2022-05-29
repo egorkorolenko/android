@@ -1,10 +1,8 @@
 package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -43,7 +41,7 @@ import kotlin.system.exitProcess
 //7f48007fe08247348150f6d0df56beef
 class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    private var categorys: ArrayList<CategoryModel> = arrayListOf()
+    private var categories: ArrayList<CategoryModel> = arrayListOf()
     private var articlesArrayList: ArrayList<Articles> = arrayListOf()
     private lateinit var progressBar: ProgressBar
     private lateinit var toolBar: Toolbar
@@ -84,9 +82,9 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navController =  navHostFragment.navController
 //        navigationView.setupWithNavController(navController)
 
-        categoryAdapter = CategoryAdapter(categorys, this, object : ClickCategoryInterface {
+        categoryAdapter = CategoryAdapter(categories, this, object : ClickCategoryInterface {
             override fun onClickCategory(position: Int) {
-                val category: String = categorys[position].category
+                val category: String = categories[position].category
                 getNews(category)
             }
         })
@@ -100,7 +98,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         getNews("Всё")
 
         newsAdapter.notifyDataSetChanged()
-        categoryAdapter.notifyItemChanged(0, categorys.size)
+        categoryAdapter.notifyItemChanged(0, categories.size)
         searchImage.setOnClickListener {
             val intent = Intent(this@FeedActivity, SearchNewsByQ::class.java)
             startActivity(intent)
@@ -117,15 +115,15 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getCategories() {
-        categorys.add(CategoryModel("Всё"))
-        categorys.add(CategoryModel("Главное"))
-        categorys.add(CategoryModel("Бизнес"))
-        categorys.add(CategoryModel("Развлечение"))
-        categorys.add(CategoryModel("Здоровье"))
-        categorys.add(CategoryModel("Наука"))
-        categorys.add(CategoryModel("Спорт"))
-        categorys.add(CategoryModel("Технологии"))
-        categorys.add(CategoryModel("+ своя"))
+        categories.add(CategoryModel("Всё"))
+        categories.add(CategoryModel("Главное"))
+        categories.add(CategoryModel("Бизнес"))
+        categories.add(CategoryModel("Развлечение"))
+        categories.add(CategoryModel("Здоровье"))
+        categories.add(CategoryModel("Наука"))
+        categories.add(CategoryModel("Спорт"))
+        categories.add(CategoryModel("Технологии"))
+        categories.add(CategoryModel("+ своя"))
         categoryAdapter.notifyDataSetChanged()
     }
 
@@ -150,6 +148,10 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         alertDialogCreated.show()
         articlesArrayList.clear()
     }
+//
+//    private fun addCategory(){
+//
+//    }
 
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
