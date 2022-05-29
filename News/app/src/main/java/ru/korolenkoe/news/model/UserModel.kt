@@ -1,10 +1,16 @@
 package ru.korolenkoe.news.model
 
-class UserModel(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "users")
+data class UserModel(
+    @PrimaryKey(autoGenerate = true)
+    val id : Int,
     val name: String,
     val secondName: String,
-    email: String,
-    image: String,
-    bookMarks: List<Articles>,
-    categoryes: List<String>
+    val email: String,
+    val image: String,
+    val bookMarks: List<Articles>,
+    val categoryes: List<String>
 )

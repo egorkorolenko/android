@@ -139,7 +139,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Войти">
+            android:textColor="@color/white"
+            android:backgroundTint="@color/cardview_dark_background"
+            android:text="Войти"
+            android:drawableStart="@drawable/ic_profile_dots"
+            android:drawableTint="@color/white">
 
         </Button>
     </com.google.android.material.navigation.NavigationView>

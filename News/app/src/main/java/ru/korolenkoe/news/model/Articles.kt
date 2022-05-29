@@ -1,5 +1,8 @@
 package ru.korolenkoe.news.model
 
+import androidx.room.Entity
+
+@Entity
 class Articles(
     var title: String?,
     var description: String?,
