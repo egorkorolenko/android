@@ -1,6 +1,4 @@
-package ru.korolenkoe.news.userView
-
-import ru.korolenkoe.news.model.UserModel
+package ru.korolenkoe.news.modelViews
 
 class mCategoryModelView {
 

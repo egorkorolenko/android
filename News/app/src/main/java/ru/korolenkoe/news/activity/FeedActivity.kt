@@ -3,9 +3,11 @@ package ru.korolenkoe.news.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -136,9 +138,9 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         alertDialogBuilder.setView(promt)
         alertDialogBuilder.setPositiveButton("Готово") { _, _ ->
             if(input.text.toString()!=""){
-                categorys.removeAt(categorys.size-1)
-                categorys.add(CategoryModel(input.text.toString()))
-                categorys.add(CategoryModel("+ своя"))
+                categories.removeAt(categories.size-1)
+                categories.add(CategoryModel(input.text.toString()))
+                categories.add(CategoryModel("+ своя"))
                 categoryAdapter.notifyDataSetChanged()
             }
            }

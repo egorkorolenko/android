@@ -1,8 +1,7 @@
-package ru.korolenkoe.news.userView
+package ru.korolenkoe.news.modelViews
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import ru.korolenkoe.news.db.CategoryDatabase
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.repository.CategoryRepository

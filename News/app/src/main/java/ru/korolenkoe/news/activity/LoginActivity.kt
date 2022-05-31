@@ -10,6 +10,7 @@ import ru.korolenkoe.news.R
 class LoginActivity : AppCompatActivity() {
 
     lateinit var registrationButton: Button
+    lateinit var loginButton: Button
     lateinit var login: EditText
     lateinit var password: EditText
 
@@ -21,9 +22,15 @@ class LoginActivity : AppCompatActivity() {
         registrationButton = findViewById(R.id.registration)
         login = findViewById(R.id.login)
         password = findViewById(R.id.password_sing_in)
+        loginButton = findViewById(R.id.sing_in_button)
 
         registrationButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)
+            startActivity(intent)
+        }
+
+        loginButton.setOnClickListener {
+            val intent = Intent(this@LoginActivity, FeedActivity::class.java)
             startActivity(intent)
         }
     }
