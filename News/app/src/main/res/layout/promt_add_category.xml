@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textColor="@color/white"
-        android:text="Введите:">
+        android:textSize="22sp"
+        android:text="Введите категорию:">
 
     </TextView>
 
@@ -21,7 +22,10 @@
         android:id="@+id/input_category"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:autofillHints="введите"
-        android:textColor="@color/white"></EditText>
+        android:autofillHints="Введите категорию"
+        android:hint="Введите категорию"
+        android:textColor="@color/white">
+
+    </EditText>
 
 </LinearLayout>

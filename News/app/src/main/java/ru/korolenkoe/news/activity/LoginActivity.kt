@@ -1,6 +1,7 @@
 package ru.korolenkoe.news.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -23,6 +24,9 @@ class LoginActivity : AppCompatActivity() {
         login = findViewById(R.id.login)
         password = findViewById(R.id.password_sing_in)
         loginButton = findViewById(R.id.sing_in_button)
+
+        login.setTextColor(Color.WHITE)
+        password.setTextColor(Color.WHITE)
 
         registrationButton.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegistrationActivity::class.java)

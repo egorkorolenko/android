@@ -3,6 +3,7 @@ package ru.korolenkoe.news.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +38,7 @@ import ru.korolenkoe.news.fragments.SettingsFragment
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.NewsModel
+import ru.korolenkoe.news.utils.CheckInternetConnection
 import kotlin.system.exitProcess
 
 
@@ -55,6 +58,8 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var searchImage:ImageView
     private lateinit var openMenu:ImageView
     private lateinit var driverLayout: DrawerLayout
+    private var disconnected: Boolean = false
+    private lateinit var checkNetworkConnection: CheckInternetConnection
 
     private lateinit var navigationView: NavigationView
     private lateinit var navController: NavController
@@ -113,6 +118,8 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val intent = Intent(this@FeedActivity, LoginActivity::class.java)
                 startActivity(intent)
         }
+
+        callNetworkConnection()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -296,11 +303,25 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
             }
         }
-
         driverLayout.closeDrawer(GravityCompat.START)
         onStop()
         return true
         }
+
+    private fun callNetworkConnection() {
+        checkNetworkConnection = CheckInternetConnection(application)
+        checkNetworkConnection.observe(this) { isConnected ->
+            if (isConnected) {
+                if(disconnected){
+                Toast.makeText(this@FeedActivity,"Подлючение установлено",Toast.LENGTH_LONG).show()
+                disconnected = false}
+
+            } else {
+                disconnected = true
+                Toast.makeText(this@FeedActivity,"Нет подключения к интернету",Toast.LENGTH_LONG).show()
+            }
+        }
+    }
 
     override fun onBackPressed() {
         if(supportFragmentManager.isStateSaved){

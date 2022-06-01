@@ -17,4 +17,8 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_feed2">FeedActivity2</string>
+    <string name="Sign_In">Вход</string>
+    <string name="registration">Зарегистрироваться</string>
+    <string name="login">Логин</string>
+    <string name="password">Пароль</string>
 </resources>

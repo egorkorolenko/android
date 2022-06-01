@@ -1,6 +1,7 @@
 package ru.korolenkoe.news.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -33,14 +34,14 @@ class RegistrationActivity : AppCompatActivity() {
         passwordAgainET = findViewById(R.id.passwordAgainEV)
         registrationButtonET = findViewById(R.id.registrationOk)
 
-        val userName = userNameET.text.toString()
-        val login = loginET.text.toString()
-        val passwordET = passwordET.text.toString()
-        val passwordAgain = passwordAgainET.text.toString()
+        val userName = userNameET.setTextColor(Color.WHITE)
+        val login = loginET.setTextColor(Color.WHITE)
+        val passwordET = passwordET.setTextColor(Color.WHITE)
+        val passwordAgain = passwordAgainET.setTextColor(Color.WHITE)
 
         val articles: List<Articles> = arrayListOf()
         val categories :List<String> = arrayListOf()
-        val userModel = UserModel(0,userName,login,"",articles,categories)
+        val userModel = UserModel(0,userName.toString(),login.toString(),"",articles,categories)
 
 
         registrationButtonET.setOnClickListener {
@@ -57,9 +58,5 @@ class RegistrationActivity : AppCompatActivity() {
     private fun checkData(userModel: UserModel){
         insertUser(userModel)
     }
-
-
-
-
 
 }
