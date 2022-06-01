@@ -18,9 +18,9 @@ class UserModelView(private val repository: UserRepository):ViewModel(){
         repository.insertUser(userModel)
     }
 
-    fun getUserByLogin(login:String){
-        repository.getUserByLogin(login)
-    }
+//    fun getUserByLogin(login:String){
+//        repository.getUserByLogin(login)
+//    }
 
     fun getAllUsers(): List<UserModel>{
         return repository.readAllData

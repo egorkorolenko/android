@@ -12,9 +12,9 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertUser(userModel: UserModel)
 
-    @Query("SELECT * from users where login =login")
-    fun getUserByLogin(login :String):UserModel
-
+//    @Query("SELECT * from users where login =login")
+//    fun getUserByLogin(login :String):UserModel
+//
     @Query("SELECT * from users")
     fun readAllData():List<UserModel>
 }

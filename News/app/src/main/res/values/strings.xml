@@ -21,4 +21,9 @@
     <string name="registration">Зарегистрироваться</string>
     <string name="login">Логин</string>
     <string name="password">Пароль</string>
+    <string name="SIGN">Вход</string>
+    <string name="not_accoutns">Нет аккаунта?</string>
+    <string name="Send">Поделиться</string>
+    <string name="in_booksmark">В закладки</string>
+    <string name="download">Скачать</string>
 </resources>

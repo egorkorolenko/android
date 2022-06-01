@@ -11,7 +11,7 @@ class UserRepository(private val userDao: UserDao) {
         userDao.insertUser(userModel)
     }
 
-    fun getUserByLogin(login:String):UserModel{
-        return userDao.getUserByLogin(login)
-    }
+//    fun getUserByLogin(login:String):UserModel{
+//        return userDao.getUserByLogin(login)
+//    }
 }
