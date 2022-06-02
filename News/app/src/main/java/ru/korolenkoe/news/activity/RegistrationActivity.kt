@@ -59,6 +59,14 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
 
+    private fun checkLoginUnique(login:String):Boolean{
+       val userModel = repository.getUserByLogin(login)
+        if(userModel!=null){
+            return false
+        }
+        return true
+    }
+
     private fun createUser(id:Int, name: String, login: String, password: String): UserModel {
         return UserModel(id, name, login, "", password)
     }
@@ -73,12 +81,16 @@ class RegistrationActivity : AppCompatActivity() {
             loginET.setHintTextColor(Color.RED)
             return false
         }
+        if(!checkLoginUnique(userModel.login)){
+            Toast.makeText(this@RegistrationActivity,"Логин уже занят",Toast.LENGTH_LONG).show()
+            loginET.hint = "Логин уже занят"
+            loginET.setHintTextColor(Color.RED)
+            return false
+        }
         if(userModel.name==""){
             userNameET.hint = "Введите имя"
             userNameET.setHintTextColor(Color.RED)
             return false
-        }else{
-
         }
         if(userModel.password==""){
             passwordET.hint = "Введите пароль"

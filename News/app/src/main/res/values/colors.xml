@@ -13,4 +13,5 @@
     <color name="blackMain">#121212</color>
     <color name="specialColor">#9D66EF</color>
     <color name="specialColor2">#5E24B7</color>
+    <color name="red">#ff0000</color>
 </resources>
