@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.db.UserDatabase
 import ru.korolenkoe.news.model.Articles
+import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.UserModel
 import ru.korolenkoe.news.repository.UserRepository
 
@@ -48,13 +49,14 @@ class RegistrationActivity : AppCompatActivity() {
         val passwordAgain:Editable? = passwordAgainET.text
 
         val articles: List<Articles> = arrayListOf()
-        val categories :List<String> = arrayListOf()
+        val categories :List<String> = arrayListOf("Всё","Главное","Бизнес","Развлечение","Здоровье","Наука","Спорт","Технологии","+ своя")
 
         registrationButtonET.setOnClickListener {
-            val user = createUser(0, userName.toString(), login.toString(),passwordET.toString())
+            val user = createUser(0, userName.toString(), login.toString(),passwordET.toString(),categories,articles)
             if(checkData(user,passwordAgain.toString())){
-            val intent = Intent(this@RegistrationActivity, FeedActivity::class.java)
-            startActivity(intent)
+                val intentSendLogin = Intent(this@RegistrationActivity,FeedActivity::class.java)
+                intentSendLogin.putExtra(user.login,"login")
+                startActivity(intentSendLogin)
             }
         }
     }
@@ -67,8 +69,8 @@ class RegistrationActivity : AppCompatActivity() {
         return true
     }
 
-    private fun createUser(id:Int, name: String, login: String, password: String): UserModel {
-        return UserModel(id, name, login, "", password)
+    private fun createUser(id:Int, name: String, login: String, password: String,categories:List<String>,articles: List<Articles>): UserModel {
+        return UserModel(id, name, login, "", password,articles,categories)
     }
 
     private fun insertUser(userModel: UserModel){

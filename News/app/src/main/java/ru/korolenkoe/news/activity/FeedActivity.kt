@@ -3,7 +3,6 @@ package ru.korolenkoe.news.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -20,17 +19,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.korolenkoe.news.ClickCategoryInterface
+import ru.korolenkoe.news.utils.ClickCategoryInterface
 import ru.korolenkoe.news.R
-import ru.korolenkoe.news.RetrofitAPI
+import ru.korolenkoe.news.utils.RetrofitAPI
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
+import ru.korolenkoe.news.db.UserDatabase
 import ru.korolenkoe.news.fragments.BookmarksFragment
 import ru.korolenkoe.news.fragments.DownloadFragment
 import ru.korolenkoe.news.fragments.ProfileFragment
@@ -38,6 +37,8 @@ import ru.korolenkoe.news.fragments.SettingsFragment
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.NewsModel
+import ru.korolenkoe.news.model.UserModel
+import ru.korolenkoe.news.repository.UserRepository
 import ru.korolenkoe.news.utils.CheckInternetConnection
 import kotlin.system.exitProcess
 
@@ -65,9 +66,15 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
 
+    private lateinit var userNameNavigationView: TextView
+    private lateinit var database: UserDatabase
+    private lateinit var repository: UserRepository
+    private var userModel: UserModel = UserModel(-1,"Гость","","","", listOf(), listOf())
+    private var isLogin = false
+
     private lateinit var signInButton:Button
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
@@ -76,6 +83,10 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         driverLayout = findViewById(R.id.driverLayout)
         openMenu = findViewById(R.id.image_open_menu)
         swipeRefreshLayout = findViewById(R.id.id_swipe_refresh)
+
+        database = UserDatabase.getDatabase(this.application)
+        repository = UserRepository(database.userDao())
+
         toolBar = findViewById(R.id.toolbar)
         recyclerViewCategory = findViewById(R.id.recyclerViewCategory)
         recyclerViewNews = findViewById(R.id.recyclerViewNews)
@@ -84,6 +95,20 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
+
+        val headerContainer:View = navigationView.getHeaderView(0)
+        userNameNavigationView = headerContainer.findViewById(R.id.userNameNV)
+//        userNameNavigationView =
+//            navigationView.inflateHeaderView(R.id.userNameNV) as TextView //findViewById(R.id.userNameNV)
+
+        val argument: Bundle? = intent.extras
+        val login = argument?.get("login").toString()
+        userModel = getUserByLogin(login)
+        if(userModel!=null){
+            navUpdate()
+        }else{
+            userModel = UserModel(-1,"Гость","","","", listOf(), listOf())
+        }
 
         navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController =  navHostFragment.navController
@@ -107,7 +132,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         newsAdapter.notifyDataSetChanged()
         categoryAdapter.notifyItemChanged(0, categories.size)
         searchImage.setOnClickListener {
-            val intent = Intent(this@FeedActivity, SearchNewsByQ::class.java)
+            val intent = Intent(this@FeedActivity, SearchNewsActivity::class.java)
             startActivity(intent)
         }
         openMenu.setOnClickListener {
@@ -120,6 +145,17 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         callNetworkConnection()
+    }
+
+    private fun navUpdate(){
+        if(isLogin){
+            signInButton.text = "Выйти"
+            userNameNavigationView.text = userModel.name
+        }
+    }
+
+    private fun getUserByLogin(login:String) :UserModel{
+        return repository.getUserByLogin(login)
     }
 
     @SuppressLint("NotifyDataSetChanged")

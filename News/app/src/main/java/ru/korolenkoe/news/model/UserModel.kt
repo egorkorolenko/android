@@ -1,6 +1,7 @@
 package ru.korolenkoe.news.model
 
 import androidx.room.*
+import ru.korolenkoe.news.utils.ArticlesConverter
 import ru.korolenkoe.news.utils.CategoryConverter
 
 @Entity(tableName = "users")
@@ -12,7 +13,8 @@ data class UserModel(
     @ColumnInfo(name = "name") val login: String,
     @ColumnInfo(name = "image")val image: String,
     @ColumnInfo(name = "password")val password: String,
-//    @ColumnInfo(name = "bookMarks")val bookMarks: List<Articles>?,
-//    @TypeConverters(CategoryConverter::class)
-//    val categories: List<String>?
+    @TypeConverters(ArticlesConverter::class)
+    @ColumnInfo(name = "bookMarks")val bookMarks: List<Articles>,
+    @TypeConverters(CategoryConverter::class)
+    val categories: List<String>
 )

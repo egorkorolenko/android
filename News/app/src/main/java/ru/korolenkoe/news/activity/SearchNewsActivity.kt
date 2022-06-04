@@ -17,12 +17,12 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.korolenkoe.news.R
-import ru.korolenkoe.news.RetrofitAPI
+import ru.korolenkoe.news.utils.RetrofitAPI
 import ru.korolenkoe.news.adapter.NewsAdapter
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.NewsModel
 
-class SearchNewsByQ : AppCompatActivity() {
+class SearchNewsActivity : AppCompatActivity() {
 
     private var articlesArrayList: ArrayList<Articles> = arrayListOf()
     private lateinit var progressBar: ProgressBar
@@ -109,7 +109,7 @@ class SearchNewsByQ : AppCompatActivity() {
 
             override fun onFailure(call: Call<NewsModel>, t: Throwable) {
                 val toast =
-                    Toast.makeText(this@SearchNewsByQ, "Fail get news", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@SearchNewsActivity, "Fail get news", Toast.LENGTH_SHORT)
                 toast.show()
             }
         })

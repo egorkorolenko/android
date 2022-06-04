@@ -50,10 +50,14 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
-            if(checkData(loginText.toString(),passwordText.toString())){
-            val intent = Intent(this@LoginActivity, FeedActivity::class.java)
-            startActivity(intent)}
-        }
+            if(checkData(loginText.toString(),passwordText.toString())) {
+                val intentSendLogin = Intent(this@LoginActivity, FeedActivity::class.java)
+                intentSendLogin.putExtra(loginText.toString(), "login")
+                startActivity(intentSendLogin)
+                val intent = Intent(this@LoginActivity, FeedActivity::class.java)
+                startActivity(intent)
+            }
+            }
     }
 
     private fun getUserByLogin(loginStr: String): UserModel{
@@ -72,12 +76,14 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
         val user = getUserByLogin(loginStr)
+        if(user!=null){
         if(passwordStr!=user.password){
             error.visibility = View.VISIBLE
             return false
         }else{
             error.visibility = View.INVISIBLE
         }
+        }else return false
         return true
     }
 }

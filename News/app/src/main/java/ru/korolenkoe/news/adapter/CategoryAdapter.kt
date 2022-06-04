@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.jetbrains.annotations.NotNull
-import ru.korolenkoe.news.ClickCategoryInterface
+import ru.korolenkoe.news.utils.ClickCategoryInterface
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.model.CategoryModel
 

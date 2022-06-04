@@ -1,4 +1,4 @@
-package ru.korolenkoe.news
+package ru.korolenkoe.news.utils
 
 import retrofit2.Call
 import retrofit2.http.GET

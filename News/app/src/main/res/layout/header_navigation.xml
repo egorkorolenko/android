@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/userNameNV"
-        android:text="Райан Гослинг"
+        android:text="Гость"
         android:textColor="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
