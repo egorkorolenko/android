@@ -193,10 +193,6 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         alertDialogCreated.show()
         articlesArrayList.clear()
     }
-//
-//    private fun addCategory(){
-//
-//    }
 
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
@@ -240,10 +236,8 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val baseUrl = "https://newsapi.org/"
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val retrofit = Retrofit.Builder().baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create()).build()
 
         val retrofitApi: RetrofitAPI = retrofit.create(RetrofitAPI::class.java)
 
@@ -260,13 +254,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val newsModel = response.body()
                 val articles: ArrayList<Articles> = newsModel!!.articles
                 for (i in articles) {
-                    val article = Articles(
-                        i.title,
-                        i.description,
-                        i.urlToImage,
-                        i.url,
-                        i.content,
-                        i.publishedAt
+                    val article = Articles(i.title, i.description, i.urlToImage, i.url, i.content, i.publishedAt
                     )
                     articlesArrayList.add(article)
                 }

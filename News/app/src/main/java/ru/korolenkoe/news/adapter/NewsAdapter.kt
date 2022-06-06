@@ -46,6 +46,7 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
         }else{
             Picasso.get().load("res/drawable-anydpi/group.png").into(holder.newsImage)
         }
+
         holder.itemView.setOnClickListener {
             val intent = Intent(context, OpenNews::class.java)
             intent.putExtra("title", articles.title)

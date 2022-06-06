@@ -89,19 +89,17 @@ class SearchNewsActivity : AppCompatActivity() {
                 progressBar.visibility = View.GONE
                 val newsModel = response.body()
                 if (newsModel != null) {
-                    if (newsModel.articles != null) {
-                        val articles: ArrayList<Articles> = newsModel!!.articles
-                        for (i in articles) {
-                            val article = Articles(
-                                i.title,
-                                i.description,
-                                i.urlToImage,
-                                i.url,
-                                i.content,
-                                i.publishedAt
-                            )
-                            articlesArrayList.add(article)
-                        }
+                    val articles: ArrayList<Articles> = newsModel.articles
+                    for (i in articles) {
+                        val article = Articles(
+                            i.title,
+                            i.description,
+                            i.urlToImage,
+                            i.url,
+                            i.content,
+                            i.publishedAt
+                        )
+                        articlesArrayList.add(article)
                     }
                 }
                 newsAdapter.notifyDataSetChanged()
