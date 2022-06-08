@@ -52,10 +52,10 @@ class RegistrationActivity : AppCompatActivity() {
         val categories :List<String> = arrayListOf("Всё","Главное","Бизнес","Развлечение","Здоровье","Наука","Спорт","Технологии","+ своя")
 
         registrationButtonET.setOnClickListener {
-            val user = createUser(0, userName.toString(), login.toString(),passwordET.toString(),categories,articles)
+            val user = createUser(0, userName.toString().trim(), login.toString().trim(),passwordET.toString().trim(),categories,articles)
             if(checkData(user,passwordAgain.toString())){
                 val intentSendLogin = Intent(this@RegistrationActivity,FeedActivity::class.java)
-                intentSendLogin.putExtra(user.login,"login")
+                intentSendLogin.putExtra("login",user.login)
                 startActivity(intentSendLogin)
             }
         }

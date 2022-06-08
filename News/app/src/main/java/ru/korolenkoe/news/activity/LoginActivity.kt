@@ -12,6 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.db.UserDatabase
+import ru.korolenkoe.news.fragments.BookmarksFragment
 import ru.korolenkoe.news.model.UserModel
 import ru.korolenkoe.news.repository.UserRepository
 
@@ -50,12 +51,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
-            if(checkData(loginText.toString(),passwordText.toString())) {
+            if(checkData(loginText.toString().trim(),passwordText.toString().trim())) {
                 val intentSendLogin = Intent(this@LoginActivity, FeedActivity::class.java)
-                intentSendLogin.putExtra(loginText.toString(), "login")
+                intentSendLogin.putExtra( "login",loginText.toString().trim())
                 startActivity(intentSendLogin)
-                val intent = Intent(this@LoginActivity, FeedActivity::class.java)
-                startActivity(intent)
+//                val intentSendLoginForBookmarks = Intent(this@LoginActivity, BookmarksFragment::class.java)
+//                intentSendLoginForBookmarks.putExtra( "login",loginText.toString())
+//                startActivity(intentSendLoginForBookmarks)
+//                val intent = Intent(this@LoginActivity, FeedActivity::class.java)
+//                startActivity(intent)
             }
             }
     }

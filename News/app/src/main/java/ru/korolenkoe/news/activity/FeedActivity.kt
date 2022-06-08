@@ -1,7 +1,9 @@
 package ru.korolenkoe.news.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -24,9 +26,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.korolenkoe.news.utils.ClickCategoryInterface
 import ru.korolenkoe.news.R
-import ru.korolenkoe.news.utils.RetrofitAPI
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
 import ru.korolenkoe.news.db.UserDatabase
@@ -40,6 +40,8 @@ import ru.korolenkoe.news.model.NewsModel
 import ru.korolenkoe.news.model.UserModel
 import ru.korolenkoe.news.repository.UserRepository
 import ru.korolenkoe.news.utils.CheckInternetConnection
+import ru.korolenkoe.news.utils.ClickCategoryInterface
+import ru.korolenkoe.news.utils.RetrofitAPI
 import kotlin.system.exitProcess
 
 
@@ -56,8 +58,8 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var recyclerViewNews: RecyclerView
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    private lateinit var searchImage:ImageView
-    private lateinit var openMenu:ImageView
+    private lateinit var searchImage: ImageView
+    private lateinit var openMenu: ImageView
     private lateinit var driverLayout: DrawerLayout
     private var disconnected: Boolean = false
     private lateinit var checkNetworkConnection: CheckInternetConnection
@@ -69,10 +71,11 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var userNameNavigationView: TextView
     private lateinit var database: UserDatabase
     private lateinit var repository: UserRepository
-    private var userModel: UserModel = UserModel(-1,"Гость","","","", listOf(), listOf())
+    private var userModel: UserModel = UserModel(-1, "Гость", "", "", "", listOf(), listOf())
     private var isLogin = false
+    private lateinit var prefs: SharedPreferences
 
-    private lateinit var signInButton:Button
+    private lateinit var signInButton: Button
 
     @SuppressLint("NotifyDataSetChanged", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,22 +99,21 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView = findViewById(R.id.navigationView)
         navigationView.setNavigationItemSelectedListener(this)
 
-        val headerContainer:View = navigationView.getHeaderView(0)
+        val headerContainer: View = navigationView.getHeaderView(0)
         userNameNavigationView = headerContainer.findViewById(R.id.userNameNV)
-//        userNameNavigationView =
-//            navigationView.inflateHeaderView(R.id.userNameNV) as TextView //findViewById(R.id.userNameNV)
+//        userNameNavigationView = navigationView.inflateHeaderView(R.id.userNameNV) as TextView //findViewById(R.id.userNameNV)
 
         val argument: Bundle? = intent.extras
         val login = argument?.get("login").toString()
-        userModel = getUserByLogin(login)
-        if(userModel!=null){
+        if (login != "null") {
+            userModel = getUserByLogin(login)
+            isLogin = true
             navUpdate()
-        }else{
-            userModel = UserModel(-1,"Гость","","","", listOf(), listOf())
         }
 
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController =  navHostFragment.navController
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 //        navigationView.setupWithNavController(navController)
 
         categoryAdapter = CategoryAdapter(categories, this, object : ClickCategoryInterface {
@@ -140,56 +142,79 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         signInButton.setOnClickListener {
-                val intent = Intent(this@FeedActivity, LoginActivity::class.java)
-                startActivity(intent)
+            val intent = Intent(this@FeedActivity, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         callNetworkConnection()
+        prefs = getSharedPreferences(
+            "ru.korolenkoe.news", Context.MODE_PRIVATE
+        )
     }
 
-    private fun navUpdate(){
-        if(isLogin){
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putString("login", userModel.login)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        userModel = getUserByLogin(savedInstanceState.getString("login") as String)
+        if (userModel != null) {
+            isLogin = true
+            navUpdate()
+        }
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    private fun navUpdate() {
+        if (isLogin) {
             signInButton.text = "Выйти"
             userNameNavigationView.text = userModel.name
         }
     }
 
-    private fun getUserByLogin(login:String) :UserModel{
+    private fun getUserByLogin(login: String): UserModel {
         return repository.getUserByLogin(login)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getCategories() {
-        categories.add(CategoryModel("Всё"))
-        categories.add(CategoryModel("Главное"))
-        categories.add(CategoryModel("Бизнес"))
-        categories.add(CategoryModel("Развлечение"))
-        categories.add(CategoryModel("Здоровье"))
-        categories.add(CategoryModel("Наука"))
-        categories.add(CategoryModel("Спорт"))
-        categories.add(CategoryModel("Технологии"))
-        categories.add(CategoryModel("+ своя"))
+        if (!isLogin) {
+            categories.add(CategoryModel("Всё"))
+            categories.add(CategoryModel("Главное"))
+            categories.add(CategoryModel("Бизнес"))
+            categories.add(CategoryModel("Развлечение"))
+            categories.add(CategoryModel("Здоровье"))
+            categories.add(CategoryModel("Наука"))
+            categories.add(CategoryModel("Спорт"))
+            categories.add(CategoryModel("Технологии"))
+            categories.add(CategoryModel("+ своя"))
+        } else {
+            for (category in userModel.categories) {
+                categories.add(CategoryModel(category))
+            }
+        }
         categoryAdapter.notifyDataSetChanged()
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun addCategory() {
-        val li:LayoutInflater = LayoutInflater.from(this)
-        val promt : View = li.inflate(R.layout.promt_add_category,null)
-        val input : EditText = promt.findViewById(R.id.input_category)
+        val li: LayoutInflater = LayoutInflater.from(this)
+        val promt: View = li.inflate(R.layout.promt_add_category, null)
+        val input: EditText = promt.findViewById(R.id.input_category)
         val alertDialogBuilder = AlertDialog.Builder(this, R.style.MyDialogTheme)
         alertDialogBuilder.setView(promt)
         alertDialogBuilder.setPositiveButton("Готово") { _, _ ->
-            if(input.text.toString()!=""){
-                categories.removeAt(categories.size-1)
+            if (input.text.toString() != "") {
+                categories.removeAt(categories.size - 1)
                 categories.add(CategoryModel(input.text.toString()))
                 categories.add(CategoryModel("+ своя"))
                 categoryAdapter.notifyDataSetChanged()
             }
-           }
+        }
         alertDialogBuilder.setNegativeButton("Отмена") { _, _ ->
         }
-        val alertDialogCreated:AlertDialog = alertDialogBuilder.create();
+        val alertDialogCreated: AlertDialog = alertDialogBuilder.create();
         alertDialogCreated.show()
         articlesArrayList.clear()
     }
@@ -197,10 +222,11 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
 
-        var url="https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+        var url =
+            "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
         val categoryUrl: String
 
-        if(category == "+ своя"){
+        if (category == "+ своя") {
             addCategory()
         }
 
@@ -220,14 +246,14 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         articlesArrayList.clear()
 
-        if(categoryEn == null){
-            categoryUrl = if(category != "+ своя"){
+        if (categoryEn == null) {
+            categoryUrl = if (category != "+ своя") {
                 "https://newsapi.org/v2/everything?q=$category&from=2022-05-14&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 //                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
-            }else {
+            } else {
                 "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
             }
-        }else{
+        } else {
             categoryUrl =
                 "https://newsapi.org/v2/top-headlines?country=ru&category=$categoryEn&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
             url =
@@ -254,7 +280,8 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 val newsModel = response.body()
                 val articles: ArrayList<Articles> = newsModel!!.articles
                 for (i in articles) {
-                    val article = Articles(i.title, i.description, i.urlToImage, i.url, i.content, i.publishedAt
+                    val article = Articles(
+                        i.title, i.description, i.urlToImage, i.url, i.content, i.publishedAt
                     )
                     articlesArrayList.add(article)
                 }
@@ -311,53 +338,102 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fragment: Fragment?
         when (item.itemId) {
             R.id.profileMenu -> {
-                fragment = ProfileFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                if (!isLogin) {
+                    Toast.makeText(
+                        this@FeedActivity,
+                        "Не выполнен вход в аккаунт",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    fragment = ProfileFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
+                        .commit()
+                }
             }
             R.id.download -> {
-                fragment = DownloadFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                if (!isLogin) {
+                    Toast.makeText(
+                        this@FeedActivity,
+                        "Не выполнен вход в аккаунт",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    fragment = DownloadFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
+                        .commit()
+                }
             }
             R.id.settings -> {
                 fragment = SettingsFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
+                    .commit()
             }
             R.id.bookmarks -> {
-                fragment = BookmarksFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment).commit()
+                if (!isLogin) {
+                    Toast.makeText(
+                        this@FeedActivity,
+                        "Не выполнен вход в аккаунт",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    fragment = BookmarksFragment()
+                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
+                        .commit()
+                }
             }
         }
         driverLayout.closeDrawer(GravityCompat.START)
         onStop()
         return true
-        }
+    }
 
     private fun callNetworkConnection() {
         checkNetworkConnection = CheckInternetConnection(application)
         checkNetworkConnection.observe(this) { isConnected ->
             if (isConnected) {
-                if(disconnected){
-                Toast.makeText(this@FeedActivity,"Подлючение установлено",Toast.LENGTH_LONG).show()
-                disconnected = false}
+                if (disconnected) {
+                    Toast.makeText(this@FeedActivity, "Подлючение установлено", Toast.LENGTH_LONG)
+                        .show()
+                    disconnected = false
+                }
 
             } else {
                 disconnected = true
-                Toast.makeText(this@FeedActivity,"Нет подключения к интернету",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@FeedActivity, "Нет подключения к интернету", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
 
+    override fun onStop() {
+        if (userModel != null)
+            prefs.edit().putString("loginUser", userModel.login).apply()
+        super.onStop()
+    }
+
+    override fun onStart() {
+        val lu = prefs.getString("loginUser", "").toString()
+        if (lu == "") {
+            userModel = UserModel(-1, "Гость", "", "", "", listOf(), listOf())
+        } else {
+            userModel = getUserByLogin(lu)
+            isLogin = true
+            navUpdate()
+        }
+        super.onStart()
+    }
+
     override fun onBackPressed() {
-        if(supportFragmentManager.isStateSaved){
-            val intent = Intent(this,FeedActivity::class.java)
+        if (supportFragmentManager.isStateSaved) {
+            val intent = Intent(this, FeedActivity::class.java)
             startActivity(intent)
-        }else{
+        } else {
 //            supportFragmentManager.popBackStack()
 //            supportFragmentManager.beginTransaction().remove(ProfileFragment()).commit()
 //            supportFragmentManager.beginTransaction().remove(BookmarksFragment()).commit()
 //            supportFragmentManager.beginTransaction().remove(SettingsFragment()).commit()
 //            supportFragmentManager.beginTransaction().remove(DownloadFragment()).commit()
-            onStop()
+            onDestroy()
             exitProcess(0)
         }
 //        val drawer = findViewById<View>(R.id.driverLayout) as DrawerLayout
