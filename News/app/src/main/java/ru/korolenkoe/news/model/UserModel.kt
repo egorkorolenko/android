@@ -9,8 +9,8 @@ data class UserModel(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     val id : Int,
-    @ColumnInfo(name = "login")val name: String,
-    @ColumnInfo(name = "name") val login: String,
+    @ColumnInfo(name = "login")val login: String,
+    @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "image")val image: String,
     @ColumnInfo(name = "password")val password: String,
     @TypeConverters(ArticlesConverter::class)

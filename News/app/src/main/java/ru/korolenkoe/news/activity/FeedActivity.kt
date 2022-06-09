@@ -71,8 +71,11 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var userNameNavigationView: TextView
     private lateinit var database: UserDatabase
     private lateinit var repository: UserRepository
-    private var userModel: UserModel = UserModel(-1, "Гость", "", "", "", listOf(), listOf())
+    private var userModel: UserModel = UserModel(-1, "", "Гость", "", "", listOf(), listOf())
     private var isLogin = false
+
+    val APP_PREFERENCES = "userlogin"
+    private var USERLOGIN = ""
     private lateinit var prefs: SharedPreferences
 
     private lateinit var signInButton: Button
@@ -106,6 +109,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val argument: Bundle? = intent.extras
         val login = argument?.get("login").toString()
         if (login != "null") {
+            USERLOGIN = login
             userModel = getUserByLogin(login)
             isLogin = true
             navUpdate()
@@ -114,7 +118,6 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
-//        navigationView.setupWithNavController(navController)
 
         categoryAdapter = CategoryAdapter(categories, this, object : ClickCategoryInterface {
             override fun onClickCategory(position: Int) {
@@ -148,23 +151,23 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         callNetworkConnection()
         prefs = getSharedPreferences(
-            "ru.korolenkoe.news", Context.MODE_PRIVATE
+            APP_PREFERENCES, Context.MODE_PRIVATE
         )
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("login", userModel.login)
-        super.onSaveInstanceState(outState)
-    }
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        outState.putString("login", userModel.login)
+//        super.onSaveInstanceState(outState)
+//    }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        userModel = getUserByLogin(savedInstanceState.getString("login") as String)
-        if (userModel != null) {
-            isLogin = true
-            navUpdate()
-        }
-        super.onRestoreInstanceState(savedInstanceState)
-    }
+//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+//        userModel = getUserByLogin(savedInstanceState.getString("login") as String)
+//        if (userModel != null) {
+//            isLogin = true
+//            navUpdate()
+//        }
+//        super.onRestoreInstanceState(savedInstanceState)
+//    }
 
     private fun navUpdate() {
         if (isLogin) {
@@ -406,16 +409,16 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onStop() {
-        if (userModel != null)
-            prefs.edit().putString("loginUser", userModel.login).apply()
+        if (userModel.login!=""){
+            USERLOGIN = userModel.login
+            prefs.edit().putString(APP_PREFERENCES, USERLOGIN).apply()
+        }
         super.onStop()
     }
 
     override fun onStart() {
-        val lu = prefs.getString("loginUser", "").toString()
-        if (lu == "") {
-            userModel = UserModel(-1, "Гость", "", "", "", listOf(), listOf())
-        } else {
+        val lu = prefs.getString(APP_PREFERENCES, "").toString()
+        if (lu != "") {
             userModel = getUserByLogin(lu)
             isLogin = true
             navUpdate()
@@ -423,24 +426,13 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onStart()
     }
 
-    override fun onBackPressed() {
-        if (supportFragmentManager.isStateSaved) {
-            val intent = Intent(this, FeedActivity::class.java)
-            startActivity(intent)
-        } else {
-//            supportFragmentManager.popBackStack()
-//            supportFragmentManager.beginTransaction().remove(ProfileFragment()).commit()
-//            supportFragmentManager.beginTransaction().remove(BookmarksFragment()).commit()
-//            supportFragmentManager.beginTransaction().remove(SettingsFragment()).commit()
-//            supportFragmentManager.beginTransaction().remove(DownloadFragment()).commit()
-            onDestroy()
-            exitProcess(0)
-        }
-//        val drawer = findViewById<View>(R.id.driverLayout) as DrawerLayout
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START)
+//    override fun onBackPressed() {
+//        if (supportFragmentManager.isStateSaved) {
+//            val intent = Intent(this, FeedActivity::class.java)
+//            startActivity(intent)
 //        } else {
-//            super.onBackPressed()
+//            onDestroy()
+//            exitProcess(0)
 //        }
-    }
+//    }
 }
