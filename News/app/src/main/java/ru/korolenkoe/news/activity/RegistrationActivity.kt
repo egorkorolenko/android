@@ -57,6 +57,7 @@ class RegistrationActivity : AppCompatActivity() {
                 val intentSendLogin = Intent(this@RegistrationActivity,FeedActivity::class.java)
                 intentSendLogin.putExtra("login",user.login)
                 startActivity(intentSendLogin)
+                finishAffinity()
             }
         }
     }

@@ -26,4 +26,5 @@
     <string name="Send">Поделиться</string>
     <string name="in_booksmark">В закладки</string>
     <string name="download">Скачать</string>
+    <string name="guest">Гость</string>
 </resources>

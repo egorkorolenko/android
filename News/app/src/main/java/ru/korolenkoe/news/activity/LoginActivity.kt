@@ -55,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
                 val intentSendLogin = Intent(this@LoginActivity, FeedActivity::class.java)
                 intentSendLogin.putExtra( "login",loginText.toString().trim())
                 startActivity(intentSendLogin)
+                finishAffinity()
 //                val intentSendLoginForBookmarks = Intent(this@LoginActivity, BookmarksFragment::class.java)
 //                intentSendLoginForBookmarks.putExtra( "login",loginText.toString())
 //                startActivity(intentSendLoginForBookmarks)
