@@ -74,7 +74,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var userModel: UserModel = UserModel(-1, "", "Гость", "", "", listOf(), listOf())
     private var isLogin = false
 
-    val APP_PREFERENCES = "userlogin"
+    private val APP_PREFERENCES = "userlogin"
     private var USERLOGIN = ""
     private lateinit var prefs: SharedPreferences
 
@@ -104,7 +104,6 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val headerContainer: View = navigationView.getHeaderView(0)
         userNameNavigationView = headerContainer.findViewById(R.id.userNameNV)
-//        userNameNavigationView = navigationView.inflateHeaderView(R.id.userNameNV) as TextView //findViewById(R.id.userNameNV)
 
         val argument: Bundle? = intent.extras
         val login = argument?.get("login").toString()
@@ -145,8 +144,12 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         signInButton.setOnClickListener {
-            val intent = Intent(this@FeedActivity, LoginActivity::class.java)
-            startActivity(intent)
+            if (signInButton.text.toString() == "Выйти") {
+                logout()
+            } else {
+                val intent = Intent(this@FeedActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         callNetworkConnection()
@@ -155,19 +158,6 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         )
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        outState.putString("login", userModel.login)
-//        super.onSaveInstanceState(outState)
-//    }
-
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        userModel = getUserByLogin(savedInstanceState.getString("login") as String)
-//        if (userModel != null) {
-//            isLogin = true
-//            navUpdate()
-//        }
-//        super.onRestoreInstanceState(savedInstanceState)
-//    }
 
     private fun navUpdate() {
         if (isLogin) {
@@ -178,6 +168,26 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private fun getUserByLogin(login: String): UserModel {
         return repository.getUserByLogin(login)
+    }
+
+    private fun logout() {
+        val li: LayoutInflater = LayoutInflater.from(this)
+        val promt: View = li.inflate(R.layout.promt_logout, null)
+        val alertDialogBuilder = AlertDialog.Builder(this, R.style.MyDialogTheme)
+        alertDialogBuilder.setView(promt)
+        alertDialogBuilder.setPositiveButton("Да") { _, _ ->
+            signInButton.text = "Войти"
+            USERLOGIN = ""
+            userNameNavigationView.text = "Гость"
+            userModel = UserModel(-1, "", "Гость", "", "", listOf(), listOf())
+            isLogin = false
+            getCategories()
+            prefs.edit().remove(APP_PREFERENCES).apply()
+        }
+        alertDialogBuilder.setNegativeButton("Отмена") { _, _ ->
+        }
+        val alertDialogCreated: AlertDialog = alertDialogBuilder.create();
+        alertDialogCreated.show()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -409,7 +419,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onStop() {
-        if (userModel.login!=""){
+        if (userModel.login != "") {
             USERLOGIN = userModel.login
             prefs.edit().putString(APP_PREFERENCES, USERLOGIN).apply()
         }
@@ -425,14 +435,4 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         super.onStart()
     }
-
-//    override fun onBackPressed() {
-//        if (supportFragmentManager.isStateSaved) {
-//            val intent = Intent(this, FeedActivity::class.java)
-//            startActivity(intent)
-//        } else {
-//            onDestroy()
-//            exitProcess(0)
-//        }
-//    }
 }
