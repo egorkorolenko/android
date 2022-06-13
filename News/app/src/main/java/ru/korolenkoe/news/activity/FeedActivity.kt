@@ -4,7 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.getBitmap
+import android.provider.MediaStore.Images.Media.getContentUri
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +18,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -20,6 +27,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.navigation.NavigationView
+import com.squareup.picasso.Picasso
+import de.hdodenhof.circleimageview.CircleImageView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -42,6 +51,7 @@ import ru.korolenkoe.news.repository.UserRepository
 import ru.korolenkoe.news.utils.CheckInternetConnection
 import ru.korolenkoe.news.utils.ClickCategoryInterface
 import ru.korolenkoe.news.utils.RetrofitAPI
+import java.io.File
 
 
 //ed7b9a5f85274d88ac578e199f7cf65e
@@ -68,6 +78,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private lateinit var navHostFragment: NavHostFragment
 
     private lateinit var userNameNavigationView: TextView
+    private lateinit var userNameNavigationViewImage: CircleImageView
     private lateinit var database: UserDatabase
     private lateinit var repository: UserRepository
     private var userModel: UserModel = UserModel(-1, "", "Гость", "", "", listOf(), listOf())
@@ -103,6 +114,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val headerContainer: View = navigationView.getHeaderView(0)
         userNameNavigationView = headerContainer.findViewById(R.id.userNameNV)
+        userNameNavigationViewImage = headerContainer.findViewById(R.id.profileImage)
 
         val argument: Bundle? = intent.extras
         val login = argument?.get("login").toString()
@@ -161,6 +173,13 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (isLogin) {
             signInButton.text = "Выйти"
             userNameNavigationView.text = userModel.name
+            if(userModel.image!=""){
+//                val file = File(userModel.image)
+            val uri: Uri = Uri.parse(userModel.image)
+//                val bitmap: Bitmap = BitmapFactory.decodeFile(userModel.image)
+//                Picasso.get().load(file).fit().into(userNameNavigationViewImage)
+                userNameNavigationViewImage.setImageURI(userModel.image.toUri())
+            }
         }
     }
 
@@ -201,6 +220,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             categories.add(CategoryModel("Технологии"))
             categories.add(CategoryModel("+ своя"))
         } else {
+            categories.clear()
             for (category in userModel.categories) {
                 categories.add(CategoryModel(category))
             }

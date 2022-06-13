@@ -10,8 +10,8 @@ data class UserModel(
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "login") val login: String,
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "image") val image: String,
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "image") var image: String,
     @ColumnInfo(name = "password") val password: String,
     @TypeConverters(ArticlesConverter::class)
     @ColumnInfo(name = "bookMarks") var bookMarks: List<Articles>,

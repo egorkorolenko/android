@@ -20,6 +20,7 @@
         <entry key="..\:/Android/android/News/app/src/main/res/layout/bookmarks.xml" value="0.2346014492753623" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/bookmarks_fragment.xml" value="0.23177083333333334" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/category_card.xml" value="0.1" />
+        <entry key="..\:/Android/android/News/app/src/main/res/layout/category_card_settings.xml" value="0.3626760563380282" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/content_feed2.xml" value="0.21603260869565216" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/content_naviagtion_activiry.xml" value="0.25407608695652173" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/download_fragment.xml" value="0.14583333333333334" />
@@ -29,11 +30,11 @@
         <entry key="..\:/Android/android/News/app/src/main/res/layout/navigation_menu.xml" value="0.24728260869565216" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/news_card.xml" value="0.25343999226562525" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/not_internet_connection.xml" value="0.23777173913043478" />
-        <entry key="..\:/Android/android/News/app/src/main/res/layout/profile_fragment.xml" value="0.25271739130434784" />
+        <entry key="..\:/Android/android/News/app/src/main/res/layout/profile_fragment.xml" value="0.1" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/promt_add_category.xml" value="0.25407608695652173" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/promt_logout.xml" value="0.23822463768115942" />
         <entry key="..\:/Android/android/News/app/src/main/res/layout/registration.xml" value="0.23867753623188406" />
-        <entry key="..\:/Android/android/News/app/src/main/res/layout/settings_fragment.xml" value="0.121875" />
+        <entry key="..\:/Android/android/News/app/src/main/res/layout/settings_fragment.xml" value="0.25343999226562525" />
         <entry key="..\:/Android/android/News/app/src/main/res/menu/activity_main_drawer.xml" value="0.25625" />
         <entry key="..\:/Android/android/News/app/src/main/res/menu/card_menu.xml" value="0.25625" />
         <entry key="..\:/Android/android/News/app/src/main/res/menu/navigation_menu.xml" value="0.25625" />
