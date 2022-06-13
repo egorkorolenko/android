@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav">
 
-    <fragment
+    <activity
         android:id="@+id/profileMenu"
-        android:name="ru.korolenkoe.news.fragments.ProfileFragment"
+        android:name="ru.korolenkoe.news.fragments.ProfileActivity"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
     <activity
         android:id="@+id/bookmarks"
-        android:name="ru.korolenkoe.news.activity.BookmarksActivity"
+        android:name="ru.korolenkoe.news.fragments.BookmarksActivity"
         android:label="bookmarks_fragment"
         tools:layout="@layout/bookmarks_fragment" />
-    <fragment
+    <activity
         android:id="@+id/settings"
-        android:name="ru.korolenkoe.news.fragments.SettingsFragment"
+        android:name="ru.korolenkoe.news.fragments.SettingsActivity"
         android:label="settings_fragment"
-        tools:layout="@layout/settings_fragment" >
-    </fragment>
-    <fragment
+        tools:layout="@layout/settings_fragment"/>
+    <activity
         android:id="@+id/download"
-        android:name="ru.korolenkoe.news.fragments.DownloadFragment"
+        android:name="ru.korolenkoe.news.fragments.DownloadActivity"
         android:label="download_fragment"
         tools:layout="@layout/download_fragment" />
     <activity

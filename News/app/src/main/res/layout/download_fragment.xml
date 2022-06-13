@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".fragments.DownloadFragment">
+    tools:context=".fragments.DownloadActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Settings"
+        android:text="Download"
         android:textSize="125dp"
         android:textColor="@color/white"/>
     </RelativeLayout>

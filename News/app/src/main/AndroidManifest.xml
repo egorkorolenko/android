@@ -32,9 +32,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BookmarksActivity">
-
+        <activity android:name=".fragments.BookmarksActivity">
         </activity>
+        <activity android:name=".fragments.DownloadActivity">
+        </activity>
+        <activity android:name=".fragments.SettingsActivity">
+        </activity>
+        <activity android:name=".fragments.ProfileActivity">
+        </activity>
+
     </application>
 
 </manifest>
