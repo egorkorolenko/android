@@ -19,11 +19,17 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.activity.OpenNews
+import ru.korolenkoe.news.db.UserDatabase
+import ru.korolenkoe.news.menuAction.AddIntoBookmarks
 import ru.korolenkoe.news.menuAction.SendNews
 import ru.korolenkoe.news.model.Articles
+import ru.korolenkoe.news.model.UserModel
 
 
-class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
+class NewsAdapter(
+    _articlesArrayList: ArrayList<Articles>, _context: Context,
+    var database: UserDatabase?, var userModel: UserModel?
+) :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
     private var articlesArrayList: ArrayList<Articles> = _articlesArrayList
@@ -60,11 +66,12 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
         holder.itemView.startAnimation(animation)
 
         holder.popupMenu.setOnClickListener {
-            showPopupMenu(it, articles.url!!, context)
+            showPopupMenu(it, articles.url!!, context, position)
         }
     }
 
-    private fun showPopupMenu(v: View, url:String, context: Context) {
+    private fun showPopupMenu(v: View, url:String, context: Context, position: Int) {
+
         val popupMenu = PopupMenu(context, v)
         popupMenu.inflate(R.menu.card_menu)
         popupMenu.setOnMenuItemClickListener { item ->
@@ -75,9 +82,12 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
                     true
                 }
                 R.id.addBookmarks -> {
+                    val addIntoBookmarks = AddIntoBookmarks()
+                    if(userModel?.login !="")
+                    addIntoBookmarks.addBookMark(userModel!!, database!!, articlesArrayList[position])
                     Toast.makeText(
                         context,
-                        "Вы выбрали PopupMenu 2",
+                        "Успешно!",
                         Toast.LENGTH_SHORT
                     ).show()
                     true
@@ -105,6 +115,10 @@ class NewsAdapter(_articlesArrayList: ArrayList<Articles>, _context: Context) :
         var newsImage: ImageView = itemView.findViewById(R.id.id_imageview_news_card)
         var popupMenu: ImageView = itemView.findViewById(R.id.ib_popup_menu)
         var time: TextView = itemView.findViewById(R.id.id_time_published)
+    }
+
+    fun setUser(_userModel: UserModel?){
+        userModel = _userModel
     }
 
 }

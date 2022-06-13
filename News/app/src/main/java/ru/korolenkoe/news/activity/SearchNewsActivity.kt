@@ -44,7 +44,7 @@ class SearchNewsActivity : AppCompatActivity() {
         swipeRefreshLayout = findViewById(R.id.id_swipe_refreshSearch)
         recyclerViewNews = findViewById(R.id.recyclerViewSearchNews)
         searchView = findViewById(R.id.searchViewId)
-        newsAdapter = NewsAdapter(articlesArrayList, this)
+        newsAdapter = NewsAdapter(articlesArrayList, this, null, null)
         recyclerViewNews.layoutManager = LinearLayoutManager(this)
         recyclerViewNews.adapter = newsAdapter
         newsAdapter.notifyDataSetChanged()

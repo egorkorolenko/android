@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
+import ru.korolenkoe.news.db.UserDBWork
 import ru.korolenkoe.news.db.UserDatabase
 import ru.korolenkoe.news.fragments.BookmarksFragment
 import ru.korolenkoe.news.fragments.DownloadFragment
@@ -42,7 +43,6 @@ import ru.korolenkoe.news.repository.UserRepository
 import ru.korolenkoe.news.utils.CheckInternetConnection
 import ru.korolenkoe.news.utils.ClickCategoryInterface
 import ru.korolenkoe.news.utils.RetrofitAPI
-import kotlin.system.exitProcess
 
 
 //ed7b9a5f85274d88ac578e199f7cf65e
@@ -124,13 +124,12 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 getNews(category)
             }
         })
-        newsAdapter = NewsAdapter(articlesArrayList, this)
+        newsAdapter = NewsAdapter(articlesArrayList, this, database, userModel)
 
         recyclerViewNews.layoutManager = LinearLayoutManager(this)
         recyclerViewNews.adapter = newsAdapter
         recyclerViewCategory.adapter = categoryAdapter
 
-        getCategories()
         getNews("Всё")
 
         newsAdapter.notifyDataSetChanged()
@@ -218,11 +217,15 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val alertDialogBuilder = AlertDialog.Builder(this, R.style.MyDialogTheme)
         alertDialogBuilder.setView(promt)
         alertDialogBuilder.setPositiveButton("Готово") { _, _ ->
-            if (input.text.toString() != "") {
+            if (input.text.toString() != "" && !checkUniqueCategory(input.text.toString())) {
                 categories.removeAt(categories.size - 1)
                 categories.add(CategoryModel(input.text.toString()))
                 categories.add(CategoryModel("+ своя"))
                 categoryAdapter.notifyDataSetChanged()
+                if(userModel.login!=""){
+                    val userDBWork = UserDBWork()
+                    userDBWork.addCategory(userModel,input.text.toString(), database)
+                }
             }
         }
         alertDialogBuilder.setNegativeButton("Отмена") { _, _ ->
@@ -232,6 +235,16 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         articlesArrayList.clear()
     }
 
+    fun checkUniqueCategory(category: String):Boolean{
+        var isRepeat = false
+        for(categoryNew in categories){
+            if(category ==categoryNew.category){
+                isRepeat = true
+                break
+            }
+        }
+        return isRepeat
+    }
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
 
@@ -390,13 +403,30 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ).show()
                 } else {
                     fragment = BookmarksFragment()
+//                    val intent2 = Intent(this@FeedActivity,BookmarksActivity::class.java)
+//                    startActivity(intent2)
+                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
+                        .commit()
+                }
+            }
+            R.id.bookmarks -> {
+                if (!isLogin) {
+                    Toast.makeText(
+                        this@FeedActivity,
+                        "Не выполнен вход в аккаунт",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    fragment = BookmarksFragment()
+//                    val intent2 = Intent(this@FeedActivity,BookmarksActivity::class.java)
+//                    startActivity(intent2)
                     supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
                         .commit()
                 }
             }
         }
         driverLayout.closeDrawer(GravityCompat.START)
-        onStop()
+//        onStop()
         return true
     }
 
@@ -432,7 +462,9 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             userModel = getUserByLogin(lu)
             isLogin = true
             navUpdate()
+            newsAdapter.setUser(userModel)
         }
+        getCategories()
         super.onStart()
     }
 }

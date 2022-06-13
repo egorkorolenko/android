@@ -14,4 +14,8 @@ class UserRepository(private val userDao: UserDao) {
     fun getUserByLogin(login:String):UserModel{
         return userDao.getUserByLogin(login)
     }
+
+    fun updateUser(userModel: UserModel){
+        userDao.updateUser(userModel)
+    }
 }

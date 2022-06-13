@@ -17,6 +17,10 @@ class BookmarksFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         return inflater.inflate(R.layout.bookmarks_fragment, container, false)
     }
+
+
+
 }

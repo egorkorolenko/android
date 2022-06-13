@@ -1,9 +1,6 @@
 package ru.korolenkoe.news.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import ru.korolenkoe.news.model.UserModel
 
 @Dao
@@ -17,4 +14,7 @@ interface UserDao {
 
     @Query("SELECT * from users")
     fun readAllData():List<UserModel>
+
+    @Update
+    fun updateUser(userModel: UserModel)
 }

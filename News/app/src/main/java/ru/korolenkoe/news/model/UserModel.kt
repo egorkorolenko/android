@@ -14,7 +14,7 @@ data class UserModel(
     @ColumnInfo(name = "image")val image: String,
     @ColumnInfo(name = "password")val password: String,
     @TypeConverters(ArticlesConverter::class)
-    @ColumnInfo(name = "bookMarks")val bookMarks: List<Articles>,
+    @ColumnInfo(name = "bookMarks") var bookMarks: List<Articles>,
     @TypeConverters(CategoryConverter::class)
-    val categories: List<String>
+    var categories: List<String>
 )
