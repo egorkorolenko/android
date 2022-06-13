@@ -402,31 +402,21 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    fragment = BookmarksFragment()
-//                    val intent2 = Intent(this@FeedActivity,BookmarksActivity::class.java)
-//                    startActivity(intent2)
-                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
-                        .commit()
+//                    fragment = BookmarksFragment()
+
+                    val intent2 = Intent(this@FeedActivity,BookmarksActivity::class.java)
+                    intent2.putExtra("login", userModel.login)
+                    startActivity(intent2)
+//                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
+//                        .commit()
                 }
             }
-            R.id.bookmarks -> {
-                if (!isLogin) {
-                    Toast.makeText(
-                        this@FeedActivity,
-                        "Не выполнен вход в аккаунт",
-                        Toast.LENGTH_LONG
-                    ).show()
-                } else {
-                    fragment = BookmarksFragment()
-//                    val intent2 = Intent(this@FeedActivity,BookmarksActivity::class.java)
-//                    startActivity(intent2)
-                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
-                        .commit()
+            R.id.feed -> {
+                    val intent2 = Intent(this,FeedActivity::class.java)
+                    startActivity(intent2)
                 }
-            }
         }
         driverLayout.closeDrawer(GravityCompat.START)
-//        onStop()
         return true
     }
 

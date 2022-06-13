@@ -83,13 +83,20 @@ class NewsAdapter(
                 }
                 R.id.addBookmarks -> {
                     val addIntoBookmarks = AddIntoBookmarks()
-                    if(userModel?.login !="")
+                    if(userModel?.login !=""){
                     addIntoBookmarks.addBookMark(userModel!!, database!!, articlesArrayList[position])
                     Toast.makeText(
                         context,
                         "Успешно!",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    ).show()}
+                    else{
+                        Toast.makeText(
+                            context,
+                            "Вы не вошли в аккаунт!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                     true
                 }
                 R.id.download -> {
