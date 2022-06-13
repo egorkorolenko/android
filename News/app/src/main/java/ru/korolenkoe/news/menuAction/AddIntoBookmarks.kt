@@ -7,9 +7,9 @@ import ru.korolenkoe.news.repository.UserRepository
 
 class AddIntoBookmarks {
 
-    fun addBookMark(userModel: UserModel, database: UserDatabase, article: Articles){
+    fun addBookMark(userModel: UserModel, database: UserDatabase, article: Articles) {
         val repository = UserRepository(database.userDao())
-        val newsBookMarksList:MutableList<Articles> = userModel.bookMarks.toMutableList()
+        val newsBookMarksList: MutableList<Articles> = userModel.bookMarks.toMutableList()
         newsBookMarksList.add(article)
         userModel.bookMarks = newsBookMarksList.distinct()
         repository.updateUser(userModel)

@@ -7,15 +7,15 @@ class UserRepository(private val userDao: UserDao) {
 
     val readAllData: List<UserModel> = userDao.readAllData()
 
-    fun insertUser(userModel: UserModel){
+    fun insertUser(userModel: UserModel) {
         userDao.insertUser(userModel)
     }
 
-    fun getUserByLogin(login:String):UserModel{
+    fun getUserByLogin(login: String): UserModel {
         return userDao.getUserByLogin(login)
     }
 
-    fun updateUser(userModel: UserModel){
+    fun updateUser(userModel: UserModel) {
         userDao.updateUser(userModel)
     }
 }

@@ -13,5 +13,5 @@ interface RetrofitAPI {
     fun getNewsByCategory(@Url url: String): Call<NewsModel>
 
     @GET
-    fun getNewsByQuestion(@Url q:String):Call<NewsModel>
+    fun getNewsByQuestion(@Url q: String): Call<NewsModel>
 }

@@ -16,4 +16,5 @@ class CategoryConverter {
     @TypeConverter
     fun toCategories(data: String): List<String> {
         return data.split(',')
-    }}
+    }
+}

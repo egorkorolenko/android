@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,10 +30,10 @@ import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.NewsAdapter
 import ru.korolenkoe.news.db.UserDBWork
 import ru.korolenkoe.news.db.UserDatabase
-import ru.korolenkoe.news.fragments.BookmarksFragment
-import ru.korolenkoe.news.fragments.DownloadFragment
-import ru.korolenkoe.news.fragments.ProfileFragment
-import ru.korolenkoe.news.fragments.SettingsFragment
+import ru.korolenkoe.news.fragments.BookmarksActivity
+import ru.korolenkoe.news.fragments.DownloadActivity
+import ru.korolenkoe.news.fragments.ProfileActivity
+import ru.korolenkoe.news.fragments.SettingsActivity
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.CategoryModel
 import ru.korolenkoe.news.model.NewsModel
@@ -222,9 +221,9 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 categories.add(CategoryModel(input.text.toString()))
                 categories.add(CategoryModel("+ своя"))
                 categoryAdapter.notifyDataSetChanged()
-                if(userModel.login!=""){
+                if (userModel.login != "") {
                     val userDBWork = UserDBWork()
-                    userDBWork.addCategory(userModel,input.text.toString(), database)
+                    userDBWork.addCategory(userModel, input.text.toString(), database)
                 }
             }
         }
@@ -235,16 +234,17 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         articlesArrayList.clear()
     }
 
-    fun checkUniqueCategory(category: String):Boolean{
+    private fun checkUniqueCategory(category: String): Boolean {
         var isRepeat = false
-        for(categoryNew in categories){
-            if(category ==categoryNew.category){
+        for (categoryNew in categories) {
+            if (category == categoryNew.category) {
                 isRepeat = true
                 break
             }
         }
         return isRepeat
     }
+
     private fun getNews(category: String) {
         progressBar.visibility = View.VISIBLE
 
@@ -361,7 +361,6 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val fragment: Fragment?
         when (item.itemId) {
             R.id.profileMenu -> {
                 if (!isLogin) {
@@ -371,9 +370,9 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    fragment = ProfileFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
-                        .commit()
+                    val intent2 = Intent(this@FeedActivity, ProfileActivity::class.java)
+                    intent2.putExtra("login", userModel.login)
+                    startActivity(intent2)
                 }
             }
             R.id.download -> {
@@ -384,15 +383,15 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-                    fragment = DownloadFragment()
-                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
-                        .commit()
+                    val intent2 = Intent(this@FeedActivity, DownloadActivity::class.java)
+                    intent2.putExtra("login", userModel.login)
+                    startActivity(intent2)
                 }
             }
             R.id.settings -> {
-                fragment = SettingsFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
-                    .commit()
+                val intent2 = Intent(this@FeedActivity, SettingsActivity::class.java)
+                intent2.putExtra("login", userModel.login)
+                startActivity(intent2)
             }
             R.id.bookmarks -> {
                 if (!isLogin) {
@@ -402,19 +401,15 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
-//                    fragment = BookmarksFragment()
-
-                    val intent2 = Intent(this@FeedActivity,BookmarksActivity::class.java)
+                    val intent2 = Intent(this@FeedActivity, BookmarksActivity::class.java)
                     intent2.putExtra("login", userModel.login)
                     startActivity(intent2)
-//                    supportFragmentManager.beginTransaction().replace(R.id.driverLayout, fragment)
-//                        .commit()
                 }
             }
             R.id.feed -> {
-                    val intent2 = Intent(this,FeedActivity::class.java)
-                    startActivity(intent2)
-                }
+                val intent2 = Intent(this, FeedActivity::class.java)
+                startActivity(intent2)
+            }
         }
         driverLayout.closeDrawer(GravityCompat.START)
         return true

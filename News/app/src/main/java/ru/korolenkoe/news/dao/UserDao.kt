@@ -10,10 +10,10 @@ interface UserDao {
     fun insertUser(userModel: UserModel)
 
     @Query("SELECT * FROM users WHERE login = :login")
-    fun getUserByLogin(login :String):UserModel
+    fun getUserByLogin(login: String): UserModel
 
     @Query("SELECT * from users")
-    fun readAllData():List<UserModel>
+    fun readAllData(): List<UserModel>
 
     @Update
     fun updateUser(userModel: UserModel)

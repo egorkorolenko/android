@@ -42,14 +42,16 @@ class NewsAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val animation : Animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.left_animation)
+        val animation: Animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.left_animation)
         val articles: Articles = articlesArrayList[position]
         holder.title.text = articles.title
-        val time2 = articles.publishedAt?.toInstant()?.plus(6, DateTimeUnit.HOUR, TimeZone.currentSystemDefault()).toString()
+        val time2 = articles.publishedAt?.toInstant()
+            ?.plus(6, DateTimeUnit.HOUR, TimeZone.currentSystemDefault()).toString()
         holder.time.text = time2.replace('T', ' ').replace('Z', ' ')
-        if(articles.urlToImage != ""){
-        Picasso.get().load(articles.urlToImage).into(holder.newsImage)
-        }else{
+        if (articles.urlToImage != "") {
+            Picasso.get().load(articles.urlToImage).into(holder.newsImage)
+        } else {
             Picasso.get().load("res/drawable-anydpi/group.png").into(holder.newsImage)
         }
 
@@ -70,7 +72,7 @@ class NewsAdapter(
         }
     }
 
-    private fun showPopupMenu(v: View, url:String, context: Context, position: Int) {
+    private fun showPopupMenu(v: View, url: String, context: Context, position: Int) {
 
         val popupMenu = PopupMenu(context, v)
         popupMenu.inflate(R.menu.card_menu)
@@ -83,14 +85,18 @@ class NewsAdapter(
                 }
                 R.id.addBookmarks -> {
                     val addIntoBookmarks = AddIntoBookmarks()
-                    if(userModel?.login !=""){
-                    addIntoBookmarks.addBookMark(userModel!!, database!!, articlesArrayList[position])
-                    Toast.makeText(
-                        context,
-                        "Успешно!",
-                        Toast.LENGTH_SHORT
-                    ).show()}
-                    else{
+                    if (userModel?.login != "") {
+                        addIntoBookmarks.addBookMark(
+                            userModel!!,
+                            database!!,
+                            articlesArrayList[position]
+                        )
+                        Toast.makeText(
+                            context,
+                            "Успешно!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
                         Toast.makeText(
                             context,
                             "Вы не вошли в аккаунт!",
@@ -124,7 +130,7 @@ class NewsAdapter(
         var time: TextView = itemView.findViewById(R.id.id_time_published)
     }
 
-    fun setUser(_userModel: UserModel?){
+    fun setUser(_userModel: UserModel?) {
         userModel = _userModel
     }
 

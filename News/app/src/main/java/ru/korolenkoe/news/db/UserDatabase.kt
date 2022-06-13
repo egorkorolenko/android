@@ -13,20 +13,20 @@ import ru.korolenkoe.news.utils.CategoryConverter
 
 @Database(entities = [UserModel::class], version = 2)
 @TypeConverters(CategoryConverter::class, ArticlesConverter::class)
-abstract class UserDatabase : RoomDatabase(){
+abstract class UserDatabase : RoomDatabase() {
 
     public abstract fun userDao(): UserDao
 
-    companion object{
+    companion object {
         @Volatile
         private var INSTANCE: UserDatabase? = null
 
-        fun getDatabase(context: Context) : UserDatabase{
+        fun getDatabase(context: Context): UserDatabase {
             val tempInstance = INSTANCE
-            if(tempInstance!=null){
+            if (tempInstance != null) {
                 return tempInstance
             }
-            synchronized(this){
+            synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     UserDatabase::class.java,

@@ -22,6 +22,7 @@ class RegistrationActivity : AppCompatActivity() {
     private lateinit var passwordET: EditText
     private lateinit var passwordAgainET: EditText
     private lateinit var registrationButtonET: Button
+
     //    private lateinit var modelView: UserModelView
     private lateinit var database: UserDatabase
     private lateinit var repository: UserRepository
@@ -43,83 +44,108 @@ class RegistrationActivity : AppCompatActivity() {
         passwordET.setTextColor(Color.WHITE)
         passwordAgainET.setTextColor(Color.WHITE)
 
-        val userName:Editable? = userNameET.text
-        val login:Editable? = loginET.text
-        val passwordET:Editable? = passwordET.text
-        val passwordAgain:Editable? = passwordAgainET.text
+        val userName: Editable? = userNameET.text
+        val login: Editable? = loginET.text
+        val passwordET: Editable? = passwordET.text
+        val passwordAgain: Editable? = passwordAgainET.text
 
         val articles: List<Articles> = arrayListOf()
-        val categories :List<String> = arrayListOf("Всё","Главное","Бизнес","Развлечение","Здоровье","Наука","Спорт","Технологии","+ своя")
+        val categories: List<String> = arrayListOf(
+            "Всё",
+            "Главное",
+            "Бизнес",
+            "Развлечение",
+            "Здоровье",
+            "Наука",
+            "Спорт",
+            "Технологии",
+            "+ своя"
+        )
 
         registrationButtonET.setOnClickListener {
-            val user = createUser(0, login.toString().trim(),userName.toString().trim(),passwordET.toString().trim(),categories,articles)
-            if(checkData(user,passwordAgain.toString())){
-                val intentSendLogin = Intent(this@RegistrationActivity,FeedActivity::class.java)
-                intentSendLogin.putExtra("login",user.login)
+            val user = createUser(
+                0,
+                login.toString().trim(),
+                userName.toString().trim(),
+                passwordET.toString().trim(),
+                categories,
+                articles
+            )
+            if (checkData(user, passwordAgain.toString())) {
+                val intentSendLogin = Intent(this@RegistrationActivity, FeedActivity::class.java)
+                intentSendLogin.putExtra("login", user.login)
                 startActivity(intentSendLogin)
                 finishAffinity()
             }
         }
     }
 
-    private fun checkLoginUnique(login:String):Boolean{
-       val userModel = repository.getUserByLogin(login)
-        if(userModel!=null){
+    private fun checkLoginUnique(login: String): Boolean {
+        val userModel = repository.getUserByLogin(login)
+        if (userModel != null) {
             return false
         }
         return true
     }
 
-    private fun createUser(id:Int, name: String, login: String, password: String,categories:List<String>,articles: List<Articles>): UserModel {
-        return UserModel(id,login, name, "", password,articles,categories)
+    private fun createUser(
+        id: Int,
+        name: String,
+        login: String,
+        password: String,
+        categories: List<String>,
+        articles: List<Articles>
+    ): UserModel {
+        return UserModel(id, login, name, "", password, articles, categories)
     }
 
-    private fun insertUser(userModel: UserModel){
+    private fun insertUser(userModel: UserModel) {
         repository.insertUser(userModel)
     }
 
-    private fun checkData(userModel: UserModel,p2: String):Boolean{
-        if(userModel.login==""){
+    private fun checkData(userModel: UserModel, p2: String): Boolean {
+        if (userModel.login == "") {
             loginET.hint = "Введите логин"
             loginET.setHintTextColor(Color.RED)
             return false
         }
-        if(!checkLoginUnique(userModel.login)){
-            Toast.makeText(this@RegistrationActivity,"Логин уже занят",Toast.LENGTH_LONG).show()
+        if (!checkLoginUnique(userModel.login)) {
+            Toast.makeText(this@RegistrationActivity, "Логин уже занят", Toast.LENGTH_LONG).show()
             loginET.hint = "Логин уже занят"
             loginET.setHintTextColor(Color.RED)
             return false
         }
-        if(userModel.name==""){
+        if (userModel.name == "") {
             userNameET.hint = "Введите имя"
             userNameET.setHintTextColor(Color.RED)
             return false
         }
-        if(userModel.password==""){
+        if (userModel.password == "") {
             passwordET.hint = "Введите пароль"
             passwordET.setHintTextColor(Color.RED)
             return false
         }
-        if(p2==""){
+        if (p2 == "") {
             passwordAgainET.hint = "Повторите пароль"
             passwordAgainET.setHintTextColor(Color.RED)
             return false
         }
-        if (checkPasswords(userModel.password,p2))
-        insertUser(userModel)
+        if (checkPasswords(userModel.password, p2))
+            insertUser(userModel)
         else return false
         return true
     }
 
-    private fun checkPasswords(p1:String,p2:String):Boolean{
-        if(p1.length<6||p2.length<6){
+    private fun checkPasswords(p1: String, p2: String): Boolean {
+        if (p1.length < 6 || p2.length < 6) {
             passwordET.setText("Длина должна быть больше 8 знаков")
             passwordET.setHintTextColor(Color.RED)
-            Toast.makeText(this@RegistrationActivity,"длина<6",Toast.LENGTH_LONG).show()
+            Toast.makeText(this@RegistrationActivity, "длина<6", Toast.LENGTH_LONG).show()
             return false
         }
-        if(p1!=p2){
-            Toast.makeText(this@RegistrationActivity,"Пароли не совпадают",Toast.LENGTH_LONG).show()
+        if (p1 != p2) {
+            Toast.makeText(this@RegistrationActivity, "Пароли не совпадают", Toast.LENGTH_LONG)
+                .show()
             return false
         }
         return true

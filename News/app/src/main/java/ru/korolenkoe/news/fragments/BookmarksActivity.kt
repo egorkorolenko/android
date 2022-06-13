@@ -1,9 +1,8 @@
-package ru.korolenkoe.news.activity
+package ru.korolenkoe.news.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.ProgressBar
-import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,7 @@ import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.UserModel
 import ru.korolenkoe.news.repository.UserRepository
 
-class BookmarksActivity :AppCompatActivity() {
+class BookmarksActivity : AppCompatActivity() {
 
     private var articlesArrayList: ArrayList<Articles> = arrayListOf()
     private lateinit var progressBar: ProgressBar
@@ -24,7 +23,7 @@ class BookmarksActivity :AppCompatActivity() {
     private lateinit var recyclerViewNews: RecyclerView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var newsAdapter: NewsAdapter
-    private lateinit var userModel:UserModel
+    private lateinit var userModel: UserModel
 
     private lateinit var database: UserDatabase
     private lateinit var repository: UserRepository

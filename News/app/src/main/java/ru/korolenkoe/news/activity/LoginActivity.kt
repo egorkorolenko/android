@@ -2,7 +2,6 @@ package ru.korolenkoe.news.activity
 
 import android.content.Intent
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
@@ -12,7 +11,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.db.UserDatabase
-import ru.korolenkoe.news.fragments.BookmarksFragment
 import ru.korolenkoe.news.model.UserModel
 import ru.korolenkoe.news.repository.UserRepository
 
@@ -41,8 +39,8 @@ class LoginActivity : AppCompatActivity() {
         login.setTextColor(Color.WHITE)
         password.setTextColor(Color.WHITE)
 
-        val loginText : Editable?= login.text
-        val passwordText:Editable? = password.text
+        val loginText: Editable? = login.text
+        val passwordText: Editable? = password.text
 
 
         registrationButton.setOnClickListener {
@@ -51,9 +49,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginButton.setOnClickListener {
-            if(checkData(loginText.toString().trim(),passwordText.toString().trim())) {
+            if (checkData(loginText.toString().trim(), passwordText.toString().trim())) {
                 val intentSendLogin = Intent(this@LoginActivity, FeedActivity::class.java)
-                intentSendLogin.putExtra( "login",loginText.toString().trim())
+                intentSendLogin.putExtra("login", loginText.toString().trim())
                 startActivity(intentSendLogin)
                 finishAffinity()
 //                val intentSendLoginForBookmarks = Intent(this@LoginActivity, BookmarksFragment::class.java)
@@ -62,33 +60,33 @@ class LoginActivity : AppCompatActivity() {
 //                val intent = Intent(this@LoginActivity, FeedActivity::class.java)
 //                startActivity(intent)
             }
-            }
+        }
     }
 
-    private fun getUserByLogin(loginStr: String): UserModel{
-       return repository.getUserByLogin(loginStr)
+    private fun getUserByLogin(loginStr: String): UserModel {
+        return repository.getUserByLogin(loginStr)
     }
 
-    private fun checkData(loginStr:String, passwordStr:String):Boolean{
-        if(loginStr==""){
+    private fun checkData(loginStr: String, passwordStr: String): Boolean {
+        if (loginStr == "") {
             login.hint = "Введите логин"
             login.setHintTextColor(Color.RED)
             return false
         }
-        if(passwordStr==""){
+        if (passwordStr == "") {
             password.hint = "Введите пароль"
             password.setHintTextColor(Color.RED)
             return false
         }
         val user = getUserByLogin(loginStr)
-        if(user!=null){
-        if(passwordStr!=user.password){
-            error.visibility = View.VISIBLE
-            return false
-        }else{
-            error.visibility = View.INVISIBLE
-        }
-        }else return false
+        if (user != null) {
+            if (passwordStr != user.password) {
+                error.visibility = View.VISIBLE
+                return false
+            } else {
+                error.visibility = View.INVISIBLE
+            }
+        } else return false
         return true
     }
 }
