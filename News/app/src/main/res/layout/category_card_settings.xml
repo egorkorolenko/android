@@ -19,11 +19,11 @@
         android:background="@color/cardview_dark_background">
     </TextView>
 
-<!--    <CheckBox-->
-<!--        android:id="@+id/checkbox"-->
-<!--        android:layout_width="48dp"-->
-<!--        android:layout_height="match_parent">-->
-<!--    </CheckBox>-->
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="48dp"
+        android:layout_height="match_parent">
+    </CheckBox>
 
 
 </androidx.cardview.widget.CardView>

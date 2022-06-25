@@ -10,5 +10,4 @@ class DownloadActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.download_fragment)
     }
-
 }

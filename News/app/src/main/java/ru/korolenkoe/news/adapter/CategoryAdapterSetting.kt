@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import org.jetbrains.annotations.NotNull
@@ -33,6 +34,14 @@ class CategoryAdapterSetting(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val categoryModel: CategoryModel = articlesArrayList[position]
         holder.category.text = categoryModel.category
+        holder.checkBox.isChecked = true
+        holder.checkBox.setOnCheckedChangeListener{buttonView, isChecked ->
+            if(isChecked){
+
+            }else{
+                articlesArrayList.removeAt(position)
+            }
+        }
         holder.itemView.setOnClickListener {
             clickCategory?.onClickCategory(position)
             holder.itemView.setBackgroundResource(R.color.cardview_dark_background)
@@ -47,6 +56,11 @@ class CategoryAdapterSetting(
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var category: TextView = itemView.findViewById(R.id.text_view_category)
+        var checkBox: CheckBox = itemView.findViewById(R.id.checkbox)
+    }
+
+    fun getList(): ArrayList<CategoryModel> {
+        return articlesArrayList
     }
 
 }

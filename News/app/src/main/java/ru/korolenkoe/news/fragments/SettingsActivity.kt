@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.adapter.CategoryAdapter
 import ru.korolenkoe.news.adapter.CategoryAdapterSetting
@@ -17,6 +18,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private var categories: ArrayList<CategoryModel> = arrayListOf()
     private lateinit var okButton: Button
+    private lateinit var byDefault: Button
     private lateinit var userModel: UserModel
 
     private lateinit var database: UserDatabase
@@ -26,11 +28,13 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var recyclerViewCategory: RecyclerView
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_fragment)
 
         okButton = findViewById(R.id.settingOkButton)
+        byDefault = findViewById(R.id.byDefaultButton)
         database = UserDatabase.getDatabase(this.application)
         repository = UserRepository(database.userDao())
         recyclerViewCategory = findViewById(R.id.recyclerViewCategorySettings)
@@ -51,10 +55,52 @@ class SettingsActivity : AppCompatActivity() {
         })
         recyclerViewCategory.adapter = categoryAdapter
         categoryAdapter.notifyItemChanged(0, categories.size)
+
+        okButton.setOnClickListener {
+            val newcategories: ArrayList<String> = arrayListOf()
+            for (i in categoryAdapter.getList()){
+                newcategories.add(i.category)
+            }
+            userModel.categories = newcategories
+            repository.updateUser(userModel)
+
+                categoryAdapter = CategoryAdapterSetting(categories, this, object : ClickCategoryInterface {
+                    override fun onClickCategory(position: Int) {
+                        val category: String = categories[position].category
+                    }
+                })
+                recyclerViewCategory.adapter = categoryAdapter
+                categoryAdapter.notifyItemChanged(0, categories.size)
+        }
+
+        byDefault.setOnClickListener {
+            userModel.categories = arrayListOf(
+                "Всё",
+                "Главное",
+                "Бизнес",
+                "Развлечение",
+                "Здоровье",
+                "Наука",
+                "Спорт",
+                "Технологии",
+                "+ своя"
+            )
+            repository.updateUser(userModel)
+
+            categoryAdapter = CategoryAdapterSetting(categories, this, object : ClickCategoryInterface {
+                override fun onClickCategory(position: Int) {
+                    val category: String = categories[position].category
+                }
+            })
+            recyclerViewCategory.adapter = categoryAdapter
+            categoryAdapter.notifyItemChanged(0, categories.size)
+        }
     }
 
     private fun getUserByLogin(login: String): UserModel {
         return repository.getUserByLogin(login)
     }
+
+
 
 }
