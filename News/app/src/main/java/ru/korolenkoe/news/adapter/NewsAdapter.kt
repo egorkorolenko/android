@@ -1,7 +1,10 @@
 package ru.korolenkoe.news.adapter
 
+import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +23,9 @@ import kotlinx.datetime.toInstant
 import ru.korolenkoe.news.R
 import ru.korolenkoe.news.activity.OpenNews
 import ru.korolenkoe.news.db.UserDatabase
+import ru.korolenkoe.news.fragments.DownloadActivity
 import ru.korolenkoe.news.menuAction.AddIntoBookmarks
+import ru.korolenkoe.news.menuAction.DownloadNews
 import ru.korolenkoe.news.menuAction.SendNews
 import ru.korolenkoe.news.model.Articles
 import ru.korolenkoe.news.model.UserModel
@@ -106,9 +111,11 @@ class NewsAdapter(
                     true
                 }
                 R.id.download -> {
+                    val download = DownloadNews()
+                    download.startDownload(url, context)
                     Toast.makeText(
                         context,
-                        "Вы выбрали PopupMenu 3",
+                        "Успешно?!!!",
                         Toast.LENGTH_SHORT
                     ).show()
                     true
@@ -118,6 +125,8 @@ class NewsAdapter(
         }
         popupMenu.show()
     }
+
+
 
     override fun getItemCount(): Int {
         return articlesArrayList.size

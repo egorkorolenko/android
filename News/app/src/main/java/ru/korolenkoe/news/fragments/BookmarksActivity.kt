@@ -21,7 +21,6 @@ class BookmarksActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var toolBar: Toolbar
     private lateinit var recyclerViewNews: RecyclerView
-    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var userModel: UserModel
 
@@ -42,10 +41,8 @@ class BookmarksActivity : AppCompatActivity() {
             userModel = getUserByLogin(login)
         }
         articlesArrayList = userModel.bookMarks as ArrayList<Articles>
-        progressBar = findViewById(R.id.progressBarBookmarks)
         toolBar = findViewById(R.id.toolbar_title_bookmarks)
         recyclerViewNews = findViewById(R.id.recyclerViewBookmarks)
-        swipeRefreshLayout = findViewById(R.id.id_swipe_refreshBookmarks)
         newsAdapter = NewsAdapter(articlesArrayList, this, null, null)
 
         recyclerViewNews.layoutManager = LinearLayoutManager(this)

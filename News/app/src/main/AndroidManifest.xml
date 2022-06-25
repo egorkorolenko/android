@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ru.korolenkoe.news" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
@@ -11,6 +13,7 @@
         android:icon="@drawable/g2"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.News" >
         <activity android:name=".activity.FeedActivity"
             android:screenOrientation="fullSensor">
@@ -40,6 +43,8 @@
         <activity android:name=".fragments.SettingsActivity">
         </activity>
         <activity android:name=".fragments.ProfileActivity">
+        </activity>
+        <activity android:name=".menuAction.DownloadNews">
         </activity>
 
     </application>

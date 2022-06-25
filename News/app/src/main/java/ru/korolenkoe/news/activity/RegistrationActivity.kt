@@ -44,8 +44,8 @@ class RegistrationActivity : AppCompatActivity() {
         passwordET.setTextColor(Color.WHITE)
         passwordAgainET.setTextColor(Color.WHITE)
 
-        val userName: Editable? = userNameET.text
         val login: Editable? = loginET.text
+        val userName: Editable? = userNameET.text
         val passwordET: Editable? = passwordET.text
         val passwordAgain: Editable? = passwordAgainET.text
 
@@ -90,8 +90,8 @@ class RegistrationActivity : AppCompatActivity() {
 
     private fun createUser(
         id: Int,
-        name: String,
         login: String,
+        name: String,
         password: String,
         categories: List<String>,
         articles: List<Articles>
