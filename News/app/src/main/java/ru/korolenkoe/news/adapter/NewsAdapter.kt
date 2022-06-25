@@ -73,11 +73,11 @@ class NewsAdapter(
         holder.itemView.startAnimation(animation)
 
         holder.popupMenu.setOnClickListener {
-            showPopupMenu(it, articles.url!!, context, position)
+            showPopupMenu(it, articles.url!!, context, position, articles.title)
         }
     }
 
-    private fun showPopupMenu(v: View, url: String, context: Context, position: Int) {
+    private fun showPopupMenu(v: View, url: String, context: Context, position: Int, title:String?) {
 
         val popupMenu = PopupMenu(context, v)
         popupMenu.inflate(R.menu.card_menu)
@@ -112,7 +112,7 @@ class NewsAdapter(
                 }
                 R.id.download -> {
                     val download = DownloadNews()
-                    download.startDownload(url, context)
+                    download.startDownload(url, context, title)
                     Toast.makeText(
                         context,
                         "Успешно?!!!",
