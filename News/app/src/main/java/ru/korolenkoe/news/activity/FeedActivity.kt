@@ -294,7 +294,7 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         if (categoryEn == null) {
             categoryUrl = if (category != "+ своя") {
-                "https://newsapi.org/v2/everything?q=$category&from=2022-05-14&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
+                "https://newsapi.org/v2/everything?q=$category&from=2022-06-14&sortBy=publishedAt&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
 //                "https://newsapi.org/v2/everything?q=$category&sortBy=publishedAt&apiKey=7f48007fe08247348150f6d0df56beef"
             } else {
                 "https://newsapi.org/v2/top-headlines?country=ru&apiKey=ed7b9a5f85274d88ac578e199f7cf65e"
@@ -409,9 +409,17 @@ class FeedActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
             R.id.settings -> {
+                if (!isLogin) {
+                    Toast.makeText(
+                        this@FeedActivity,
+                        "Не выполнен вход в аккаунт",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }else{
                 val intent2 = Intent(this@FeedActivity, SettingsActivity::class.java)
                 intent2.putExtra("login", userModel.login)
                 startActivity(intent2)
+                }
             }
             R.id.bookmarks -> {
                 if (!isLogin) {

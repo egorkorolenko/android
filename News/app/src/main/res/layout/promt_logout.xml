@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Выйти из аккаунта"
         android:textSize="25sp"
+        android:fontFamily="serif"
         android:textColor="@color/white"
         tools:ignore="MissingConstraints">
     </TextView>

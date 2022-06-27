@@ -18,6 +18,7 @@
                 android:text="Закладки"
                 android:textColor="@color/specialColor"
                 android:textSize="40sp"
+                android:fontFamily="serif"
                 android:layout_gravity="center">
             </TextView>
 

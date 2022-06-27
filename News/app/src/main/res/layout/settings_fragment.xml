@@ -20,6 +20,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="Настройки"
+            android:fontFamily="serif"
             android:textColor="@color/specialColor"
             android:textSize="40sp">
 
@@ -52,10 +53,12 @@
         android:layout_marginBottom="60dp"
         android:backgroundTint="@color/specialColor"
         android:text="Готово"
-        app:layout_constraintBottom_toBottomOf="parent"
+    android:fontFamily="serif"
+    app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+    android:background="@drawable/round_border"
+    app:layout_constraintStart_toStartOf="parent">
 
     </Button>
 
@@ -68,6 +71,8 @@
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/specialColor"
         android:text="По умолчанию"
+        android:fontFamily="serif"
+        android:background="@drawable/round_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

@@ -33,10 +33,12 @@ class DownloadActivity : AppCompatActivity() {
 
     private fun viewAllDownloads() {
         val files = File("/sdcard/News").listFiles()
+        if(files!=null){
         val fileNames = arrayOfNulls<String>(files.size)
-        files?.mapIndexed { index, item ->
-            fileNames[index] = item?.name
-        }
+            files.mapIndexed { index, item ->
+                fileNames[index] = item?.name
+            }
         filesArray = fileNames
+        }
     }
 }

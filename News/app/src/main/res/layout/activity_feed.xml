@@ -142,6 +142,7 @@
             android:textColor="@color/white"
             android:backgroundTint="@color/cardview_dark_background"
             android:text="Войти"
+            android:fontFamily="serif"
             android:drawableStart="@drawable/ic_profile_dots"
             android:drawableTint="@color/white">
 
