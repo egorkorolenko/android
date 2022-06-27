@@ -11,7 +11,7 @@ import java.io.File
 
 class DownloadActivity : AppCompatActivity() {
 
-    private var filesArray: Array<String?>? = null
+    private var filesArray: Array<File>? = null
     private lateinit var newsAdapter: DownloadAdapter
     private lateinit var recyclerViewNews: RecyclerView
 
@@ -38,7 +38,7 @@ class DownloadActivity : AppCompatActivity() {
             files.mapIndexed { index, item ->
                 fileNames[index] = item?.name
             }
-        filesArray = fileNames
+        filesArray = files
         }
     }
 }

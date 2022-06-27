@@ -54,10 +54,10 @@ class NewsAdapter(
         val time2 = articles.publishedAt?.toInstant()
             ?.plus(6, DateTimeUnit.HOUR, TimeZone.currentSystemDefault()).toString()
         holder.time.text = time2.replace('T', ' ').replace('Z', ' ')
-        if (articles.urlToImage != "") {
+        if (articles.urlToImage!=null) {
             Picasso.get().load(articles.urlToImage).into(holder.newsImage)
         } else {
-            Picasso.get().load("res/drawable-anydpi/group.png").into(holder.newsImage)
+//            Picasso.get().load("res/drawable-anydpi/group.png").into(holder.newsImage)
         }
 
         holder.itemView.setOnClickListener {
