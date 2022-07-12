@@ -1,20 +1,26 @@
 package ru.korolenkoe.wanderingaround
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 
 
 @Composable
-fun Navigation() {
-    val navHostController = rememberNavController()
+fun Navigation(navHostController: NavHostController
+) {
     NavHost(navController = navHostController, startDestination = "splash_screen") {
         composable(route = "splash_screen") {
             SplashScreen(navController = navHostController)
         }
-        composable(route = "main_screen") {
+        composable(BottomNavigationItem.Home.route){
             MainScreen()
+        }
+        composable(BottomNavigationItem.Map.route){
+            MapScreen()
+        }
+        composable(BottomNavigationItem.Profile.route){
+            ProfileScreen()
         }
     }
 }

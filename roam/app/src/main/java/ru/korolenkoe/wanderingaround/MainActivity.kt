@@ -1,30 +1,24 @@
 package ru.korolenkoe.wanderingaround
 
 import android.os.Bundle
-import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.delay
+import ru.korolenkoe.wanderingaround.ui.theme.*
 
 class MainActivity : ComponentActivity() {
 
@@ -32,7 +26,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Surface(modifier = Modifier.fillMaxSize()) {
-                Navigation()
+                MainScreen()
             }
         }
     }
@@ -40,15 +34,33 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen() {
+    val navHostController = rememberNavController()
+    SplashScreen(navController = navHostController)
     Scaffold(
-        bottomBar = { BottomNavigationBar() }
+        bottomBar = { BottomNavigationBar(navHostController) }
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            HiUserName(userName = "Egor")
-            DateToday()
-            WeatherNow()
-            NumberSteps()
-            Kilometers()
+//        Navigation(navHostController)
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(OrangeYellow1)
+        ) {
+            Column {
+                HiUserName(userName = "Egor")
+                DateToday()
+                WeatherNow()
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    NumberSteps()
+                    Kilometers()
+                }
+                Row(horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()) {
+                    CurrentWalk()
+                }
+                StartWalk()
+            }
         }
     }
 }
@@ -57,8 +69,11 @@ fun MainScreen() {
 fun HiUserName(userName: String) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .padding(10.dp, 15.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(AquaBlue)
+            .padding(15.dp, 5.dp)
+            .fillMaxWidth()
     ) {
         Text(text = "Добрый день, $userName", fontSize = 30.sp)
     }
@@ -68,8 +83,11 @@ fun HiUserName(userName: String) {
 fun DateToday() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp, 60.dp)
+            .padding(10.dp, 15.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(AquaBlue)
+            .padding(15.dp, 5.dp)
+            .fillMaxWidth()
     ) {
         Text(text = "Сегодня то-то бла-бла-бла", fontSize = 25.sp)
     }
@@ -79,8 +97,11 @@ fun DateToday() {
 fun WeatherNow() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp, 100.dp)
+            .padding(10.dp, 15.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(AquaBlue)
+            .padding(15.dp, 5.dp)
+            .fillMaxWidth()
     ) {
         Text(text = "Чичас на вулице ", fontSize = 25.sp)
         Text(text = "Наерно еще пикчу надо ", fontSize = 25.sp)
@@ -91,8 +112,11 @@ fun WeatherNow() {
 fun NumberSteps() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp, 170.dp)
+            .size(190.dp, 120.dp)
+            .padding(10.dp, 15.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(AquaBlue)
+            .padding(15.dp, 5.dp)
     ) {
         Text(text = "Было сделано 5 шагов", fontSize = 25.sp)
     }
@@ -102,19 +126,41 @@ fun NumberSteps() {
 fun Kilometers() {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(10.dp, 210.dp)
+            .size(190.dp, 120.dp)
+            .padding(10.dp, 15.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(AquaBlue)
+            .padding(15.dp, 5.dp)
     ) {
         Text(text = "Вы прошли 0 км", fontSize = 25.sp)
     }
 }
 
 @Composable
-fun BottomNavigationBar() {
+fun CurrentWalk() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .padding(15.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(LightGreen3)
+            .padding(15.dp, 20.dp)
+            .fillMaxWidth()
+    ) {
+        Column {
+            Text(text = "Вы прошли 0 шагов", fontSize = 25.sp)
+            Text(text = "Вы прошли 0 км", fontSize = 25.sp)
+        }
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
-        MyBottomNavigationItem.Home,
-        MyBottomNavigationItem.Map,
-        MyBottomNavigationItem.Profile
+        BottomNavigationItem.Home,
+        BottomNavigationItem.Map,
+        BottomNavigationItem.Profile
     )
     BottomNavigation(
         backgroundColor = Color.Gray,
@@ -130,9 +176,24 @@ fun BottomNavigationBar() {
                 alwaysShowLabel = true,
                 selected = false,
                 onClick = {
-                    /* Add code later */
+                    navController.navigate(item.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
                 })
         }
+    }
+}
+
+@Composable
+fun StartWalk() {
+    Button(onClick = { /*TODO*/ }, modifier = Modifier.padding(15.dp, 15.dp)) {
+        Text("Start", fontSize = 25.sp)
     }
 }
 
