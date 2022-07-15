@@ -1,6 +1,11 @@
-package ru.korolenkoe.wanderingaround
+package ru.korolenkoe.wanderingaround.activites
 
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
 import android.view.animation.OvershootInterpolator
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -11,17 +16,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import ru.korolenkoe.wanderingaround.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import kotlinx.coroutines.delay
+
+class SplashActivity: ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            SplashScreen()
+            Handler().postDelayed({
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 3000)
+        }
+    }
+}
+
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen() {
     val scale = remember {
         Animatable(0f)
     }
@@ -35,8 +54,6 @@ fun SplashScreen(navController: NavController) {
                 }
             )
         )
-        delay(3000L)
-        navController.navigate(BottomNavigationItem.Home.route)
     }
     Box(
         modifier = Modifier
@@ -63,5 +80,4 @@ fun SplashScreen(navController: NavController) {
             )
         }
     }
-
 }

@@ -32,7 +32,6 @@ fun ProfileScreen(){
             fontSize = 25.sp
         )
     }
-
 }
 
 @Preview

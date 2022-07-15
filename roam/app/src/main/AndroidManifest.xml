@@ -14,7 +14,13 @@
         android:theme="@style/Theme.WanderingAround"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activites.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.WanderingAround">
+        </activity>
+        <activity
+            android:name=".activites.SplashActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.WanderingAround">
